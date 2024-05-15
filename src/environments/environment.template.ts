@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api/supply-system',
-  // filesUrl: 'https://satt.transporte.gob.hn:295/files/'
+  apiUrl: 'API_URL',
+  filesUrl: 'FILES_URL'
 };
 
 /*
