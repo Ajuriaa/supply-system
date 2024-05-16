@@ -39,35 +39,23 @@ export class HeaderComponent implements OnInit {
       case url.includes('dashboard'):
         this.title = 'Dashboard';
         break;
-      case url.includes('vehicles'):
-        this.title = 'Vehículos';
+      case url.includes('products'):
+        this.title = 'Productos';
         break;
-      case url.includes('drivers'):
-        this.title = 'Conductores';
+      case url.includes('providers'):
+        this.title = 'Proveedores';
         break;
-      case url.includes('maintenance'):
-        this.title = 'Mantenimiento';
+      case url.includes('requisitions'):
+        this.title = 'Requisiciones';
         break;
-      case url.includes('requests'):
-        this.title = 'Solicitudes';
+      case url.includes('history'):
+        this.title = 'Historial';
         break;
-      case url.includes('request'):
-        this.title = 'Solicitud';
-        break;
-      case url.includes('create-log'):
-        this.title = 'Crear Bitácoras';
-        break;
-      case url.includes('log'):
-        this.title = 'Bitácoras';
-        break;
-      case url.includes('vehicle'):
-        this.title = 'Vehículo';
-        break;
-      case url.includes('driver'):
-        this.title = 'Conductor';
+      case url.includes('inventory'):
+        this.title = 'Inventario';
         break;
       default:
-        this.title = 'Sistema de Gestión de Vehículos';
+        this.title = 'Sistema de Proveduría';
     }
   }
 }

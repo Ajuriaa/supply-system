@@ -29,7 +29,7 @@ export class SideBarComponent implements OnInit {
     this.selectedOption = option;
     this.animateIcon();
     setTimeout(() => {
-      option === 'requests' ? this.router.navigate(['admin/requests/0']) : this.router.navigate([`admin/`, option]);
+      option === 'history' ? this.router.navigate(['admin/history/0']) : this.router.navigate([`admin/`, option]);
     }, 500);
   }
 
@@ -40,29 +40,20 @@ export class SideBarComponent implements OnInit {
   private routeOption(): void {
     const url = this.router.url;
     switch(true) {
-      case url.includes('vehicle'):
-        this.selectedOption = 'vehicles';
+      case url.includes('history'):
+        this.selectedOption = 'history';
         break;
-      case url.includes('maintenance'):
-        this.selectedOption = 'maintenance';
+      case url.includes('inventory'):
+        this.selectedOption = 'inventory';
         break;
-      case url.includes('driver'):
-        this.selectedOption = 'drivers';
+      case url.includes('products'):
+        this.selectedOption = 'products';
         break;
-      case url.includes('create-log'):
-        this.selectedOption = 'logs';
+      case url.includes('providers'):
+        this.selectedOption = 'providers';
         break;
-      case url.includes('log'):
-        this.selectedOption = 'logs';
-        break;
-      case url.includes('requests'):
-        this.selectedOption = 'requests';
-        break;
-      case url.includes('request'):
-        this.selectedOption = 'requests';
-        break;
-      case url.includes('vehicles'):
-        this.selectedOption = 'vehicles';
+      case url.includes('requisitions'):
+        this.selectedOption = 'requisitions';
         break;
       default:
         this.selectedOption = 'dashboard';
@@ -76,19 +67,19 @@ export class SideBarComponent implements OnInit {
       case 'dashboard':
         this.iconTopPosition = 4.5;
         break;
-      case 'vehicles':
+      case 'products':
         this.iconTopPosition = 21;
         break;
-      case 'drivers':
+      case 'inventory':
         this.iconTopPosition = 37.5;
         break;
-      case 'maintenance':
+      case 'providers':
         this.iconTopPosition = 54;
         break;
-      case 'requests':
+      case 'requisitions':
         this.iconTopPosition = 70.5;
         break;
-      case 'logs':
+      case 'history':
         this.iconTopPosition = 87;
         break;
     }
