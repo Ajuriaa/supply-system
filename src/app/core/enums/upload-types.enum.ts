@@ -1,3 +1,5 @@
 export enum Upload {
-  vehicle = 'vehicles'
+  product = 'products',
+  invoice = 'invoices',
+  requisition = 'requisitions',
 }
