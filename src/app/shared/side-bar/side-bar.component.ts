@@ -65,22 +65,22 @@ export class SideBarComponent implements OnInit {
   private animateIcon(): void {
     switch (this.selectedOption) {
       case 'dashboard':
-        this.iconTopPosition = 4.5;
+        this.iconTopPosition = 3.5;
         break;
       case 'products':
-        this.iconTopPosition = 21;
+        this.iconTopPosition = 18;
         break;
       case 'inventory':
-        this.iconTopPosition = 37.5;
+        this.iconTopPosition = 32.5;
         break;
       case 'providers':
-        this.iconTopPosition = 54;
+        this.iconTopPosition = 47;
         break;
       case 'requisitions':
-        this.iconTopPosition = 70.5;
+        this.iconTopPosition = 61.5;
         break;
       case 'history':
-        this.iconTopPosition = 87;
+        this.iconTopPosition = 76;
         break;
     }
   }

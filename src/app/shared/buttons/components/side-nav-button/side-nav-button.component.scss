@@ -3,11 +3,11 @@
 .btn {
   @include flex-center-column;
   cursor: pointer;
-  height: 10rem;
-  width: 10rem;
+  height: 8rem;
+  width: 8rem;
   border-radius: 100%;
   gap: 1rem;
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
   color: $black;
   position: relative;
@@ -20,8 +20,8 @@
 }
 
 .image {
-  width: 5rem;
-  height: 5rem;
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
 .selected {
