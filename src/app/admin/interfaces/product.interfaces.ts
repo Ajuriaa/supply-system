@@ -1,0 +1,25 @@
+export interface IProduct {
+  id: number;
+  name: string;
+  unit: string;
+  imageUrl?: string;
+  batches: IBatch[];
+  group: IGroup;
+}
+
+export interface IGroup {
+  id: number;
+  name: string;
+  description?: string;
+}
+
+export interface IBatch {
+  id: number;
+  due: Date;
+  quantity: number;
+  price: number;
+}
+
+export interface IProductsResponse {
+  data: IProduct[];
+}
