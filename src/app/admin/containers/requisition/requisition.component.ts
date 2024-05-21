@@ -49,7 +49,7 @@ export class RequisitionComponent implements OnInit {
   }
 
   public generatePDF(): void {
-    //
+    this.pdfHelper.generateRequisitionsPDF(this.filteredRequisitions);
   }
 
   public getName(fullName: string): string {

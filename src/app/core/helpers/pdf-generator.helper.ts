@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import moment from 'moment';
-import { IProduct, ISupplier } from 'src/app/admin/interfaces';
+import { IProduct, IRequisition, ISupplier } from 'src/app/admin/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +64,12 @@ export class PDFHelper {
     this.generatePDF(formattedSuppliers, columns, 'Listado de Proveedores');
   }
 
+  public generateRequisitionsPDF(requisitions: IRequisition[]): void {
+    const columns = ['Estado', 'Empleado', 'Jefe', 'Departamento'];
+    const formattedSuppliers = this.formatRequisitionsForPDF(requisitions);
+    this.generatePDF(formattedSuppliers, columns, 'Listado de Requisiciones');
+  }
+
   public generateProductsPDF(products: IProduct[]): void {
     const columns = ['Nombre', 'Grupo', 'Cantidad', 'Unidad', 'Vencimiento', 'Precio'];
     const formattedVehicles = this.formatProductsForPDF(products);
@@ -76,6 +82,17 @@ export class PDFHelper {
         supplier.name,
         this.getDate(supplier.entries[0].date),
         supplier.entries.length
+      ];
+    });
+  }
+
+  public formatRequisitionsForPDF(requisitions: IRequisition[]) {
+    return requisitions.map(requisition => {
+      return [
+        requisition.state.state,
+        requisition.employeeName,
+        requisition.bossName,
+        requisition.department
       ];
     });
   }
