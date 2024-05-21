@@ -4,7 +4,6 @@ import {
   AdminRouterComponent, DashboardComponent,
   HistoryComponent,
   InventoryComponent,
-  ProductsComponent,
   SuppliersComponent,
   RequisitionComponent
 } from './containers';
@@ -23,11 +22,6 @@ export const adminRoutes: Routes = [{
       path: 'inventory',
       title: 'Inventario',
       component: InventoryComponent
-    },
-    {
-      path: 'products',
-      title: 'Productos',
-      component: ProductsComponent
     },
     {
       path: 'history/:id',

@@ -46,9 +46,6 @@ export class SideBarComponent implements OnInit {
       case url.includes('inventory'):
         this.selectedOption = 'inventory';
         break;
-      case url.includes('products'):
-        this.selectedOption = 'products';
-        break;
       case url.includes('suppliers'):
         this.selectedOption = 'suppliers';
         break;
@@ -67,20 +64,17 @@ export class SideBarComponent implements OnInit {
       case 'dashboard':
         this.iconTopPosition = 3.5;
         break;
-      case 'products':
+      case 'inventory':
         this.iconTopPosition = 18;
         break;
-      case 'inventory':
+      case 'suppliers':
         this.iconTopPosition = 32.5;
         break;
-      case 'suppliers':
+      case 'requisitions':
         this.iconTopPosition = 47;
         break;
-      case 'requisitions':
-        this.iconTopPosition = 61.5;
-        break;
       case 'history':
-        this.iconTopPosition = 76;
+        this.iconTopPosition = 61.5;
         break;
     }
   }
