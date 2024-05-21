@@ -1,2 +1,3 @@
 export * from './product.interfaces';
-export * from './supplier.interface';
+export * from './supplier.interfaces';
+export * from './requisition.interfaces';

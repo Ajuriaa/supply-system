@@ -59,7 +59,7 @@ export class PDFHelper {
   }
 
   public generateSuppliersPDF(suppliers: ISupplier[]): void {
-    const columns = ['Nombre', 'Última entrada', 'Cantidad'];
+    const columns = ['Nombre', 'Última entrada', 'Cantidad de entregas'];
     const formattedSuppliers = this.formatSuppliersForPDF(suppliers);
     this.generatePDF(formattedSuppliers, columns, 'Listado de Proveedores');
   }
