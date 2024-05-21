@@ -11,7 +11,7 @@ import moment from 'moment';
 import { SuppliersQueries } from '../../services';
 import { ISupplier } from '../../interfaces';
 
-const TABLE_COLUMNS = ['name', 'latestEntry', 'amount', 'actions'];
+const TABLE_COLUMNS = ['name', 'email', 'phone', 'address', 'rtn', 'latestEntry', 'amount', 'actions'];
 
 @Component({
   selector: 'app-suppliers',

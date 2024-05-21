@@ -21,7 +21,11 @@ export class SearchService {
     if(dataModel === Model.Supplier) {
       return data.filter((supplier: ISupplier) =>
         supplier.name.toLowerCase().includes(term.toLowerCase()) ||
-        moment.utc(supplier.entries[0].date).format('DD/MM/YYYY').toLowerCase().includes(term.toLowerCase())
+        moment.utc(supplier.entries[0].date).format('DD/MM/YYYY').toLowerCase().includes(term.toLowerCase()) ||
+        supplier.email?.toLowerCase().includes(term.toLowerCase()) ||
+        supplier.phone?.toLowerCase().includes(term.toLowerCase()) ||
+        supplier.address?.toLowerCase().includes(term.toLowerCase()) ||
+        supplier.rtn?.toLowerCase().includes(term.toLowerCase())
       );
     }
     if(dataModel === Model.Requisition) {

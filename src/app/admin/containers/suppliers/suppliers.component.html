@@ -33,6 +33,34 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Correo</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.email || 'No Registrado' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Teléfono</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.phone || 'No Registrado' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Dirección</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.address || 'No Registrado' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rtn">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">RTN</th>
+        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+          {{ element.rtn || 'No Registrado' }}
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="latestEntry">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Fecha Última Entrega</th>
         <td mat-cell *matCellDef="let element" class="table-cell pointer">

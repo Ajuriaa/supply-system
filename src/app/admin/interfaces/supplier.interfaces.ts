@@ -3,6 +3,10 @@ import { IBatch, IProduct } from ".";
 export interface ISupplier {
   id: number;
   name: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  rtn?: string;
   entries: IEntry[];
 }
 
