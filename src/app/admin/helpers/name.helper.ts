@@ -11,4 +11,10 @@ export class NameHelper {
 
     return shortName;
   }
+
+  public capitalizeWords(str: string): string {
+    return str.toLowerCase().split(' ').map(word =>
+        word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+}
 }

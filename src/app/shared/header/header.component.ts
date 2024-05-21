@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
       case url.includes('products'):
         this.title = 'Productos';
         break;
-      case url.includes('providers'):
+      case url.includes('suppliers'):
         this.title = 'Proveedores';
         break;
       case url.includes('requisitions'):

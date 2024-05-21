@@ -5,6 +5,8 @@ export interface IRequisition {
   employeeId: number;
   department: string;
   documentUrl?: string;
+  employeeName: string;
+  bossName: string;
   state: IState;
   productRequisition: IProductRequisition[];
 }
@@ -19,4 +21,8 @@ export interface IProductRequisition {
   quantity: number;
   product: IProduct;
   requisition: IRequisition;
+}
+
+export interface IRequisitionResponse {
+  data: IRequisition[];
 }

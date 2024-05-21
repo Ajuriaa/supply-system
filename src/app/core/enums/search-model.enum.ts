@@ -2,5 +2,6 @@ export enum Model {
   Product = 'Product',
   Group = 'Group',
   Supplier = 'Supplier',
-  Batch = 'Batch'
+  Batch = 'Batch',
+  Requisition = 'Requisition',
 }
