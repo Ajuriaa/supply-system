@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { IProductsResponse } from '../interfaces';
+import { ISuppliersResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsQueries {
+export class SuppliersQueries {
   constructor(private http: HttpClient) {}
 
-  public getAllProducts(): Observable<IProductsResponse> {
-    return this.http.get<IProductsResponse>(`${environment.apiUrl}/products`);
+  public getAllSuppliers(): Observable<ISuppliersResponse> {
+    return this.http.get<ISuppliersResponse>(`${environment.apiUrl}/suppliers`);
   }
 }

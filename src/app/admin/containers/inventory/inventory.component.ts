@@ -70,7 +70,7 @@ export class InventoryComponent implements OnInit {
   }
 
   private getAllProducts(): void {
-    this.productQuery.getAllDrivers().subscribe(({ data }) => {
+    this.productQuery.getAllProducts().subscribe(({ data }) => {
       this.products = data;
       this.filteredProducts = data;
       this.getClosestDueDate();

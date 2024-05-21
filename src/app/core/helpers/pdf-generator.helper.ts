@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import moment from 'moment';
-import { IProduct } from 'src/app/admin/interfaces';
+import { IProduct, ISupplier } from 'src/app/admin/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -58,10 +58,26 @@ export class PDFHelper {
     doc.output('dataurlnewwindow');
   }
 
+  public generateSuppliersPDF(suppliers: ISupplier[]): void {
+    const columns = ['Nombre', 'Última entrada', 'Cantidad'];
+    const formattedSuppliers = this.formatSuppliersForPDF(suppliers);
+    this.generatePDF(formattedSuppliers, columns, 'Listado de Proveedores');
+  }
+
   public generateProductsPDF(products: IProduct[]): void {
     const columns = ['Nombre', 'Grupo', 'Cantidad', 'Unidad', 'Vencimiento', 'Precio'];
     const formattedVehicles = this.formatProductsForPDF(products);
     this.generatePDF(formattedVehicles, columns, 'Listado de Productos',);
+  }
+
+  private formatSuppliersForPDF(suppliers: ISupplier[]) {
+    return suppliers.map(supplier => {
+      return [
+        supplier.name,
+        this.getDate(supplier.entries[0].date),
+        supplier.entries.length
+      ];
+    });
   }
 
   public formatProductsForPDF(products: IProduct[]) {

@@ -5,7 +5,7 @@ import {
   HistoryComponent,
   InventoryComponent,
   ProductsComponent,
-  ProvidersComponent,
+  SuppliersComponent,
   RequisitionComponent
 } from './containers';
 
@@ -35,9 +35,9 @@ export const adminRoutes: Routes = [{
       component: HistoryComponent
     },
     {
-      path: 'providers',
+      path: 'suppliers',
       title: 'Proveedores',
-      component: ProvidersComponent
+      component: SuppliersComponent
     },
     {
       path: 'requisitions',
