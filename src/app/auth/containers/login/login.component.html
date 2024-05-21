@@ -1,41 +1,41 @@
-<div class="container">
+<div class="login-container">
 <img src="assets/login.png" />
 
-<div class="panel">
-  <div class="labels">
-    <p class="main">Sistema de Proveduría</p>
+<div class="login-panel">
+  <div class="login-labels">
+    <p class="login-main">Sistema de Proveduría</p>
     <p>INICIO DE SESIÓN</p>
   </div>
-  <form [formGroup]="loginForm" class="form">
-    <p class="label first">Usuario</p>
-    <mat-form-field class="field" appearance="outline">
-      <i class="uil uil-user icon" [ngClass]="error ? 'error-color' : ''"></i>
+  <form [formGroup]="loginForm" class="login-form">
+    <p class="login-label login-first">Usuario</p>
+    <mat-form-field class="login-field" appearance="outline">
+      <i class="uil uil-user login-icon" [ngClass]="error ? 'error-color' : ''"></i>
       <input
         matInput
         required
-        class="input"
+        class="login-input"
         formControlName="username"
         placeholder="Ingrese el nombre de usuario"
       >
 
     </mat-form-field>
-    <p class="label">Contraseña</p>
-    <mat-form-field class="field" appearance="outline">
-      <i class="uil uil-lock icon" [ngClass]="error ? 'error-color' : ''"></i>
-      <i class="uil uil-eye icon eye" (click)="togglePasswordVisibility()" *ngIf="showPassword"></i>
-      <i class="uil uil-eye-slash icon eye" (click)="togglePasswordVisibility()" *ngIf="!showPassword"></i>
+    <p class="login-label">Contraseña</p>
+    <mat-form-field class="login-field" appearance="outline">
+      <i class="uil uil-lock login-icon" [ngClass]="error ? 'error-color' : ''"></i>
+      <i class="uil uil-eye login-icon eye" (click)="togglePasswordVisibility()" *ngIf="showPassword"></i>
+      <i class="uil uil-eye-slash login-icon eye" (click)="togglePasswordVisibility()" *ngIf="!showPassword"></i>
       <input
         [type]="passwordType"
         matInput
         required
-        class="input"
+        class="login-input"
         formControlName="password"
         placeholder="Ingrese la contraseña"
       >
     </mat-form-field>
-    <mat-error *ngIf="error" class="error">Llene el formulario con sus credenciales</mat-error>
-    <app-primary-button styleClass="btn-white" (btnClick)="login()" class="button">INGRESAR</app-primary-button>
+    <mat-error *ngIf="error" class="login-error">Llene el formulario con sus credenciales</mat-error>
+    <app-primary-button styleClass="btn-white" (btnClick)="login()" class="login-button">INGRESAR</app-primary-button>
   </form>
-  <img class="image" src="assets/logo.png" />
+  <img class="login-image" src="assets/logo.png" />
 </div>
 </div>
