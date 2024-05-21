@@ -59,7 +59,7 @@ export class PDFHelper {
   }
 
   public generateSuppliersPDF(suppliers: ISupplier[]): void {
-    const columns = ['Nombre', 'Última entrada', 'Cantidad de entregas'];
+    const columns = ['Nombre', 'Correo', 'Teléfono', 'Dirección', 'RTN', 'Última entrada', '# de Entregas'];
     const formattedSuppliers = this.formatSuppliersForPDF(suppliers);
     this.generatePDF(formattedSuppliers, columns, 'Listado de Proveedores');
   }
@@ -79,7 +79,11 @@ export class PDFHelper {
   private formatSuppliersForPDF(suppliers: ISupplier[]) {
     return suppliers.map(supplier => {
       return [
-        supplier.name,
+        supplier.name || 'No Registrado',
+        supplier.email || 'No Registrado',
+        supplier.phone || 'No Registrado',
+        supplier.address || 'No Registrado',
+        supplier.rtn || 'No Registrado',
         this.getDate(supplier.entries[0].date),
         supplier.entries.length
       ];
