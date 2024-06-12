@@ -21,7 +21,8 @@ const TABLE_COLUMNS = ['name', 'email', 'phone', 'address', 'rtn', 'latestEntry'
     PrimaryButtonComponent, NoResultComponent, MatTableModule,
     NgxPaginationModule
   ],
-  templateUrl: './suppliers.component.html'
+  templateUrl: './suppliers.component.html',
+  styleUrls: ['./suppliers.component.scss']
 })
 export class SuppliersComponent implements OnInit {
   public loading = true;

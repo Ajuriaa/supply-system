@@ -7,6 +7,7 @@ export const EMPTY_GROUP: IGroup = {
 
 export const EMPTY_PRODUCT: IProduct = {
   id: 0,
+  minimum: 0,
   name: "",
   unit: "",
   batches: [],

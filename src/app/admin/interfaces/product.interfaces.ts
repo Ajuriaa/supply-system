@@ -1,6 +1,7 @@
 export interface IProduct {
   id: number;
   name: string;
+  minimum: number;
   unit: string;
   imageUrl?: string;
   batches: IBatch[];
