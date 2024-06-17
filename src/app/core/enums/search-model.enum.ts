@@ -4,4 +4,5 @@ export enum Model {
   Supplier = 'Supplier',
   Batch = 'Batch',
   Requisition = 'Requisition',
+  History = 'History'
 }

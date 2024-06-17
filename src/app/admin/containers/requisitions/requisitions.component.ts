@@ -8,7 +8,7 @@ import { Model } from 'src/app/core/enums';
 import { PDFHelper } from 'src/app/core/helpers';
 import { SearchService } from 'src/app/core/services';
 import { IRequisition } from '../../interfaces';
-import { RequisitionQueries } from '../../services/requisitions.queries';
+import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
 
 const TABLE_COLUMNS = ['state', 'employee', 'boss', 'department', 'document', 'actions'];
@@ -22,8 +22,8 @@ const TABLE_COLUMNS = ['state', 'employee', 'boss', 'department', 'document', 'a
     NgxPaginationModule
   ],
   providers: [PDFHelper, NameHelper],
-  templateUrl: './requisition.component.html',
-  styleUrl: './requisition.component.scss'
+  templateUrl: './requisitions.component.html',
+  styleUrl: './requisitions.component.scss'
 })
 export class RequisitionComponent implements OnInit {
   public loading = true;
@@ -47,6 +47,11 @@ export class RequisitionComponent implements OnInit {
   public onSearch(term: string): void {
     this.filteredRequisitions = this.searchEngine.filterData(this.requisitions, term, Model.Requisition);
   }
+
+  public goToUrl(link: string): void {
+    window.open(link, "_blank");
+  }
+
 
   public generatePDF(): void {
     this.pdfHelper.generateRequisitionsPDF(this.filteredRequisitions);

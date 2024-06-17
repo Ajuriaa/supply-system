@@ -15,6 +15,7 @@ export interface IProductEntry {
   product: IProduct;
   entry: IEntry;
   quantity: number;
+  currentQuantity: number;
   price: number;
 }
 

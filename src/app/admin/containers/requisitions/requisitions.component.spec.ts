@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RequisitionComponent } from './requisition.component';
+import { RequisitionComponent } from './requisitions.component';
 
 describe('RequisitionComponent', () => {
   let component: RequisitionComponent;
@@ -11,7 +11,7 @@ describe('RequisitionComponent', () => {
       imports: [RequisitionComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(RequisitionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

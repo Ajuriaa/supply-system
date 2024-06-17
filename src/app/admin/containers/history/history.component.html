@@ -1,1 +1,22 @@
-<p>history works!</p>
+<app-loading class="loading" *ngIf="loading"></app-loading>
+<div class="container" *ngIf="!loading">
+  <section class="panel">
+    <div class="search-bar-wrapper">
+      <i class="uil uil-search-alt"></i>
+      <input
+        [(ngModel)]="searchInput"
+        class="search-bar"
+        (input)="onSearch(searchInput)"
+        type="text"
+        placeholder="Buscar"
+      />
+    </div>
+    <div class="available">
+      <p class="panel-title">INFORMACION</p>
+      <p class="panel-label">LOREM IPSUM</p>
+    </div>
+    <div class="buttons">
+      <app-primary-button class="button">IMPRIMIR LISTADO</app-primary-button>
+    </div>
+  </section>
+</div>
