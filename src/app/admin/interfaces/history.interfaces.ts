@@ -1,16 +1,18 @@
-import { IEntry } from ".";
+import { IEntry, IProduct, IRequisition } from ".";
 
 export interface IOutput {
   id: number;
-  productId: number;
+  product: IProduct;
   observation?: string;
   quantity: number;
-  requisitionId?: number;
+  currentQuantity: number;
+  date: Date;
+  requisition?: IRequisition;
   motive: string;
 }
 
 export interface IHistory {
-  entries: IEntry;
-  outputs: IOutput;
+  entries: IEntry[];
+  outputs: IOutput[];
 }
 

@@ -1,4 +1,4 @@
-import { IGroup, IProduct } from "src/app/admin/interfaces";
+import { IGroup, IHistory, IProduct } from "src/app/admin/interfaces";
 
 export const EMPTY_GROUP: IGroup = {
   id: 0,
@@ -12,4 +12,9 @@ export const EMPTY_PRODUCT: IProduct = {
   unit: "",
   batches: [],
   group: EMPTY_GROUP
+};
+
+export const EMPTY_HISTORY: IHistory = {
+  entries: [],
+  outputs: []
 };
