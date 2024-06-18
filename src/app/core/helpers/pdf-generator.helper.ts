@@ -76,6 +76,26 @@ export class PDFHelper {
     this.generatePDF(formattedVehicles, columns, 'Listado de Productos',);
   }
 
+  public generateHistoryPDF(history: any[]): void {
+    const columns = ['Fecha', 'Producto', 'Unidad', 'Tipo', 'Cantidad Inicial', 'Cantidad', 'Cantidad Final'];
+    const formattedHistory = this.formatHistoryForPDF(history);
+    this.generatePDF(formattedHistory, columns, 'Historial de Productos');
+  }
+
+  private formatHistoryForPDF(history: any[]) {
+    return history.map(entry => {
+      return [
+        moment.utc(entry.date).format('DD/MM/YYYY'),
+        entry.product,
+        entry.unit,
+        entry.type,
+        entry.initialQuantity,
+        entry.quantity,
+        entry.finalQuantity
+      ];
+    });
+  }
+
   private formatSuppliersForPDF(suppliers: ISupplier[]) {
     return suppliers.map(supplier => {
       return [

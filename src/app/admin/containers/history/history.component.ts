@@ -7,12 +7,12 @@ import { SearchService } from 'src/app/core/services';
 import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { IEntry, IHistory, IOutput } from '../../interfaces';
 import { HistoryQueries } from '../../services';
-import { EMPTY_HISTORY } from 'src/app/core/helpers';
+import { EMPTY_HISTORY, PDFHelper } from 'src/app/core/helpers';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 
-const TABLE_COLUMNS = ['date', 'product', 'unit', 'initialQuantity', 'type', 'quantity', 'finalQuantity', 'document'];
+const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'document'];
 
 @Component({
   selector: 'app-history',
@@ -37,7 +37,8 @@ moment: any;
 
   constructor(
     private searchEngine: SearchService,
-    private historyQuery: HistoryQueries
+    private historyQuery: HistoryQueries,
+    private pdfHelper: PDFHelper
   ){}
 
   ngOnInit(): void {
@@ -50,6 +51,10 @@ moment: any;
 
   public onSearch(term: string): void {
     this.filteredHistory = this.searchEngine.filterData(this.mergedHistory, term, Model.History);
+  }
+
+  public generatePDF(): void {
+    this.pdfHelper.generateHistoryPDF(this.filteredHistory);
   }
 
   public goToUrl(link: string): void {
