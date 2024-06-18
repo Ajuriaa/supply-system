@@ -85,7 +85,7 @@ export class CreateUpdateProductComponent implements OnInit {
     }
 
     const data: any = {
-      id: 0,
+      id: this.data.product.id,
       name: this.productForm.value.name,
       minimum: this.productForm.value.minimum,
       unit: this.productForm.value.unit,

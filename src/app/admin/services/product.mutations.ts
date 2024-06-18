@@ -37,7 +37,7 @@ export class ProductMutations {
 
   public updateProduct(data: IProduct): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.post<boolean>(`${environment.apiUrl}/update-product`, { data }).subscribe(
+      this.http.post<boolean>(`${environment.apiUrl}/update-product`, data).subscribe(
         (response: boolean) => {
           if (response) {
             this.toaster.success('Producto editado correctamente', 'Listo!');
