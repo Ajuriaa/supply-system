@@ -54,7 +54,7 @@ export class InventoryComponent implements OnInit {
   }
 
   public getDueDate(product: IProduct): string {
-    const date = product.batches.length > 0 ? moment(product.batches[0].due).format('DD/MM/YYYY') : 'No Registrado';
+    const date = product.batches.length > 0 ? moment(product.batches[0].due).format('DD/MM/YYYY') : 'Sin Unidades';
     return date;
   }
 
