@@ -8,8 +8,10 @@ import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import moment from 'moment';
 import { EMPTY_PRODUCT, PDFHelper } from 'src/app/core/helpers';
-import { ProductsQueries } from '../../services';
+import { ProductQueries } from '../../services';
 import { IProduct } from '../../interfaces/product.interfaces';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateUpdateProductComponent } from '../../components';
 
 const TABLE_COLUMNS = ['name', 'group', 'amount', 'unit', 'closestDueDate', 'price', 'actions'];
 
@@ -21,7 +23,7 @@ const TABLE_COLUMNS = ['name', 'group', 'amount', 'unit', 'closestDueDate', 'pri
     PrimaryButtonComponent, NoResultComponent, MatTableModule,
     NgxPaginationModule
   ],
-  providers: [ProductsQueries, PDFHelper],
+  providers: [ProductQueries, PDFHelper],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.scss'
 })
@@ -39,11 +41,12 @@ export class InventoryComponent implements OnInit {
   constructor(
     private searchEngine: SearchService,
     private pdfHelper: PDFHelper,
-    private productQuery: ProductsQueries
+    private productQuery: ProductQueries,
+    private dialog: MatDialog
   ){}
 
   ngOnInit(): void {
-      this.getAllProducts();
+    this.getAllProducts();
   }
 
   public onSearch(term: string): void {
@@ -51,12 +54,12 @@ export class InventoryComponent implements OnInit {
   }
 
   public getDueDate(product: IProduct): string {
-    const date = product.batches[0].due;
-    return moment(date).format('DD/MM/YYYY');
+    const date = product.batches.length > 0 ? moment(product.batches[0].due).format('DD/MM/YYYY') : 'No Registrado';
+    return date;
   }
 
   public getAmount(product: IProduct): number {
-    const amount = product.batches.reduce((acc, batch) => acc + batch.quantity, 0);
+    const amount = product.batches.length > 0 ? product.batches.reduce((acc, batch) => acc + batch.quantity, 0) : 0;
     if(amount < this.minAmount) {
       this.minAmount = amount;
       this.minProduct = product;
@@ -67,6 +70,24 @@ export class InventoryComponent implements OnInit {
 
   public generatePDF(): void {
     this.pdfHelper.generateProductsPDF(this.filteredProducts);
+  }
+
+  public getPrice(product: IProduct): string {
+    if (product.batches && product.batches.length > 0) {
+      return "L." + product.batches[0].price;
+    }
+    return "N/A"
+  }
+
+  public openCreateUpdateProductModal(modalType: string = 'create', product: IProduct = EMPTY_PRODUCT): void {
+    this.dialog.open(CreateUpdateProductComponent, {
+      panelClass: 'dialog-style',
+      data: { product, modalType }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllProducts();
+      }
+    });
   }
 
   private getAllProducts(): void {
@@ -80,7 +101,8 @@ export class InventoryComponent implements OnInit {
 
   private getClosestDueDate(): void {
     const dueDates = this.products.map(product => {
-      const dueDate = new Date(product.batches[0].due).getTime();
+      const due = product.batches.length > 0 ? product.batches[0].due : moment().endOf('year').toDate();
+      const dueDate = new Date(due).getTime();
       return { product, dueDate };
     });
 

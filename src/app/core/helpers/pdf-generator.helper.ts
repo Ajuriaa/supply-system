@@ -126,10 +126,10 @@ export class PDFHelper {
       return [
         product.name,
         product.group.name,
-        product.batches.reduce((acc, batch) => acc + batch.quantity, 0),
+        product.batches?.reduce((acc, batch) => acc + batch.quantity, 0),
         product.unit,
-        this.getDate(product.batches[0].due),
-        product.batches[0].price
+        product.batches ? this.getDate(product.batches[0].due) : 'No Registrado',
+        product.batches ? product.batches[0].price : 'No Registrado'
       ];
     });
   }

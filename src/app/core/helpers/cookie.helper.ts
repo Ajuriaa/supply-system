@@ -39,7 +39,7 @@ export class cookieHelper {
   public dataToSend(data: any): any {
     return {
       ...data,
-      Sistema_Usuario: this.getUsername()
+      systemUser: this.getUsername()
     };
   }
 }

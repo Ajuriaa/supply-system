@@ -24,3 +24,7 @@ export interface IBatch {
 export interface IProductsResponse {
   data: IProduct[];
 }
+
+export interface IGroupsResponse {
+  data: IGroup[];
+}
