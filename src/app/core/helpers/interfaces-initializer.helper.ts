@@ -27,4 +27,4 @@ export const EMPTY_SUPPLIER: ISupplier = {
   address: '',
   rtn: '',
   entries: []
-}
+};

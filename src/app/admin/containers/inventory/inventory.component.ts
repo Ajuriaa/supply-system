@@ -8,9 +8,9 @@ import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import moment from 'moment';
 import { EMPTY_PRODUCT, PDFHelper } from 'src/app/core/helpers';
+import { MatDialog } from '@angular/material/dialog';
 import { ProductQueries } from '../../services';
 import { IProduct } from '../../interfaces/product.interfaces';
-import { MatDialog } from '@angular/material/dialog';
 import { CreateUpdateProductComponent } from '../../components';
 
 const TABLE_COLUMNS = ['name', 'group', 'amount', 'unit', 'closestDueDate', 'price', 'actions'];
@@ -76,7 +76,7 @@ export class InventoryComponent implements OnInit {
     if (product.batches && product.batches.length > 0) {
       return "L." + product.batches[0].price;
     }
-    return "N/A"
+    return "N/A";
   }
 
   public openCreateUpdateProductModal(modalType: string = 'create', product: IProduct = EMPTY_PRODUCT): void {

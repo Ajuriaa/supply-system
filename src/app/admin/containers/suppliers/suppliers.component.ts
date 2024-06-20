@@ -8,9 +8,9 @@ import { SearchService } from 'src/app/core/services';
 import { LoadingComponent, PrimaryButtonComponent, NoResultComponent } from 'src/app/shared';
 import { Model } from 'src/app/core/enums';
 import moment from 'moment';
+import { MatDialog } from '@angular/material/dialog';
 import { SuppliersQueries } from '../../services';
 import { ISupplier } from '../../interfaces';
-import { MatDialog } from '@angular/material/dialog';
 import { CreateUpdateSupplierComponent } from '../../components';
 
 const TABLE_COLUMNS = ['name', 'email', 'phone', 'address', 'rtn', 'latestEntry', 'amount', 'actions'];
@@ -58,7 +58,8 @@ export class SuppliersComponent implements OnInit {
   }
 
   public getLatestEntry(supplier: ISupplier): string {
-    return moment.utc(supplier.entries[0].date).format('DD/MM/YYYY');
+    const date = supplier.entries.length > 0 ? moment.utc(supplier.entries[0].date).format('DD/MM/YYYY') : 'Sin entregas';
+    return date;
   }
 
   public openCreateUpdateProductModal(modalType: string = 'create', supplier: ISupplier = EMPTY_SUPPLIER): void {

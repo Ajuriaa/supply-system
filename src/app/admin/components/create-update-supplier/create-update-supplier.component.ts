@@ -5,8 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { LoadingComponent, PrimaryButtonComponent, FileDropComponent } from 'src/app/shared';
-import { ISupplier } from '../../interfaces';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ISupplier } from '../../interfaces';
+import { SupplierMutations } from '../../services';
 
 @Component({
   selector: 'app-create-update-supplier',
@@ -29,6 +30,7 @@ export class CreateUpdateSupplierComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<CreateUpdateSupplierComponent>,
+    private supplierMutation: SupplierMutations,
     @Inject(MAT_DIALOG_DATA) public data: { supplier: ISupplier, modalType: string }
   ) {}
 
@@ -49,8 +51,37 @@ export class CreateUpdateSupplierComponent implements OnInit {
     this.dialogRef.close(changesMade);
   }
 
-  public onSubmit(): void {
+  public async onSubmit(): Promise<void> {
+    this.error = false;
+    this.emailError = false;
 
+    if (this.supplierForm.controls.email.errors?.email) {
+      this.emailError = true;
+      return;
+    } else if (this.supplierForm.invalid) {
+      this.error = true;
+      return;
+    }
+
+    this.loading = true;
+
+    const data: any = {
+      id: this.data.supplier.id,
+      name: this.supplierForm.value.name,
+      phone: this.supplierForm.value.phone,
+      email: this.supplierForm.value.email,
+      address: this.supplierForm.value.address,
+      rtn: this.supplierForm.value.rtn
+    };
+
+    const mutationResponse = this.isCreate
+    ? await this.supplierMutation.createSupplier(data)
+    : await this.supplierMutation.updateSupplier(data);
+
+    if (mutationResponse) {
+      this.onCancel(true);
+    }
+    this.loading = false;
   }
 
   private fillForm(): void {

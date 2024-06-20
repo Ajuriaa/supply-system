@@ -60,6 +60,7 @@
     </div>
   </form>
 
+  <mat-error class="error" *ngIf="emailError">Pon un correo válido*</mat-error>
   <mat-error class="error" *ngIf="error">Recuerda llenar todos los campos requeridos*</mat-error>
   <div class="buttons">
     <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>

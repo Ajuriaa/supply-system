@@ -1,16 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IGroup, IProduct } from '../../interfaces';
 import { FileDropComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ProductMutations, ProductQueries, UploaderService } from '../../services';
 import { MatSelectModule } from '@angular/material/select';
-import { FileNameHelper } from '../../helpers';
 import { Upload } from 'src/app/core/enums';
 import { environment } from 'src/environments/environments';
+import { FileNameHelper } from '../../helpers';
+import { ProductMutations, ProductQueries, UploaderService } from '../../services';
+import { IGroup, IProduct } from '../../interfaces';
 
 @Component({
   selector: 'app-create-update-product',
@@ -91,7 +91,7 @@ export class CreateUpdateProductComponent implements OnInit {
       unit: this.productForm.value.unit,
       groupId: this.groups.find((group) => group.name === this.productForm.value.group)?.id || this.groups[0].id,
       imageUrl: file
-    }
+    };
 
     if(fileUploaded){
       const mutationResponse = this.isCreate

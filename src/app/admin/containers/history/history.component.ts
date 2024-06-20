@@ -5,12 +5,12 @@ import { MatInputModule } from '@angular/material/input';
 import { Model } from 'src/app/core/enums';
 import { SearchService } from 'src/app/core/services';
 import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { IEntry, IHistory, IOutput } from '../../interfaces';
-import { HistoryQueries } from '../../services';
 import { EMPTY_HISTORY, PDFHelper } from 'src/app/core/helpers';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
+import { HistoryQueries } from '../../services';
+import { IHistory } from '../../interfaces';
 
 const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'document'];
 
