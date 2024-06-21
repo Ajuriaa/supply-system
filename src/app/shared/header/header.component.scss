@@ -11,12 +11,6 @@
   color: $white;
   font-size: 3.5rem;
 
-  .image {
-    position: absolute;
-    left: 4rem;
-    height: 6rem;
-  }
-
   .profile {
     height: 6rem;
   }
@@ -33,4 +27,26 @@
     text-align: right;
     font-size: 1.7rem;
   }
+}
+
+.left-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  position: absolute;
+  left: 4rem;
+
+  .image {
+    height: 6rem;
+  }
+
+  .uil {
+    font-size: 5rem;
+    cursor: pointer;
+  }
+}
+.notifications {
+  position: absolute;
+  z-index: 4;
+  left: 20rem;
 }
