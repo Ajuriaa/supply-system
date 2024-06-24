@@ -1,13 +1,18 @@
 @import 'global';
 
-.title {
-  font-size: 3rem;
-  font-weight: bold;
-  color: $dark-blue;
-}
+.container {
+  @include flex-center-column;
 
-.error {
-  font-size: 2rem;
+  .title {
+    font-size: 3rem;
+    margin: 2rem;
+    font-weight: bold;
+    color: $dark-blue;
+  }
+
+  .error {
+    font-size: 2rem;
+  }
 }
 
 .form {

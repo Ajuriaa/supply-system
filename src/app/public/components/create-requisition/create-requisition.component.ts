@@ -84,7 +84,7 @@ export class CreateRequisitionComponent implements OnInit {
       quantity: this.requisitionForm.controls.quantity.value
     }
     this.productRequisitions.push(productRequisition);
-    this.requisitionForm.reset();
+    this.requisitionForm.controls.product.setValue('');
   }
 
   public async getProductList(): Promise<void> {
