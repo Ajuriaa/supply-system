@@ -3,6 +3,10 @@
 .container {
   @include flex-center-column;
 
+  .btn {
+    width: 35rem;
+  }
+
   .title {
     font-size: 3rem;
     margin: 2rem;
