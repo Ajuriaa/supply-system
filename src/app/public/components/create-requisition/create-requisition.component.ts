@@ -79,12 +79,17 @@ export class CreateRequisitionComponent implements OnInit {
       this.error = true;
       return;
     }
-    const productRequisition: IProductRequisition = {
-      product: this.selectedProduct,
-      quantity: this.requisitionForm.controls.quantity.value
+    const alreadyInTable = this.checkProductRequisition(this.selectedProduct, this.requisitionForm.controls.quantity.value);
+
+    if(!alreadyInTable) {
+      const productRequisition: IProductRequisition = {
+        product: this.selectedProduct,
+        quantity: this.requisitionForm.controls.quantity.value
+      }
+      this.productRequisitions.push(productRequisition);
     }
-    this.productRequisitions.push(productRequisition);
     this.requisitionForm.controls.product.setValue('');
+    this.requisitionForm.controls.quantity.setValue(0);
   }
 
   public async getProductList(): Promise<void> {
@@ -98,5 +103,14 @@ export class CreateRequisitionComponent implements OnInit {
 
   private filterProducts(products: IProduct[]): IProduct[] {
     return products.filter((product) => product.batches.reduce((acc, batch) => acc + batch.quantity, 0));;
+  }
+
+  private checkProductRequisition(product: IProduct, quantity: number): boolean {
+    const productIndex = this.productRequisitions.findIndex((productRequisition) => productRequisition.product.id === product.id);
+    if (productIndex !== -1) {
+      this.productRequisitions[productIndex].quantity += quantity;
+      return true;
+    }
+    return false;
   }
 }
