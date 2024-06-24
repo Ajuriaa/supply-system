@@ -19,6 +19,11 @@
   }
 }
 
+.created-label {
+  font-size: 3rem;
+  color: $dark-blue;
+}
+
 .form {
   @include flex-center;
   margin: 2rem 0;

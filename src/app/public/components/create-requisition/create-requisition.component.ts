@@ -12,21 +12,11 @@ import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
-import { PublicQueries } from '../..';
+import { MatDialog } from '@angular/material/dialog';
+import { IProductRequisition, PublicQueries } from '../..';
+import { ConfirmComponent } from '../confirm/confirm.component';
 
 const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit', 'actions'];
-
-export interface IProductRequisition {
-  product: IProduct;
-  quantity: number;
-}
-
-export interface IProductRequisitionWithIds {
-  id: number;
-  productId: number;
-  requisitionId: number;
-  quantity: number;
-}
 
 @Component({
   selector: 'app-create-requisition',
@@ -49,12 +39,14 @@ export class CreateRequisitionComponent implements OnInit {
   public displayedColumns: string[] = TABLE_COLUMNS;
   public selectedProduct: IProduct = EMPTY_PRODUCT;
   public productRequisitions: IProductRequisition[] = [];
+  public requisitionCreated = false;
   public page = 1;
 
   constructor(
     private publicQuery: PublicQueries,
     private formBuilder: FormBuilder,
-    private searchEngine: SearchService
+    private searchEngine: SearchService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -99,7 +91,17 @@ export class CreateRequisitionComponent implements OnInit {
     });
   }
 
-  public onSubmit(): void {}
+  public onSubmit(): void {
+    this.dialog.open(ConfirmComponent, {
+      panelClass: 'dialog-style',
+      data: this.productRequisitions
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.productRequisitions = [];
+        this.requisitionCreated = true;
+      }
+    });
+  }
 
   public editProduct(productRequisition: IProductRequisition): void {
     this.selectedProduct = productRequisition.product;
