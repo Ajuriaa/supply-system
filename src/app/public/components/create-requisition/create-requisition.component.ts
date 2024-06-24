@@ -14,7 +14,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
 import { PublicQueries } from '../..';
 
-const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit'];
+const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit', 'actions'];
 
 export interface IProductRequisition {
   product: IProduct;
@@ -100,6 +100,17 @@ export class CreateRequisitionComponent implements OnInit {
   }
 
   public onSubmit(): void {}
+
+  public editProduct(productRequisition: IProductRequisition): void {
+    this.selectedProduct = productRequisition.product;
+    this.requisitionForm.controls.product.setValue(productRequisition.product.name);
+    this.requisitionForm.controls.quantity.setValue(productRequisition.quantity);
+    this.productRequisitions = this.productRequisitions.filter((product) => product.product.id !== productRequisition.product.id);
+  }
+
+  public removeProduct(productRequisition: IProductRequisition): void {
+    this.productRequisitions = this.productRequisitions.filter((requisition) => requisition.product.id !== productRequisition.product.id);
+  }
 
   private filterProducts(products: IProduct[]): IProduct[] {
     return products.filter((product) => product.batches.reduce((acc, batch) => acc + batch.quantity, 0));
