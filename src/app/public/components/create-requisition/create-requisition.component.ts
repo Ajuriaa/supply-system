@@ -5,7 +5,6 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatInputModule } from '@angular/material/input';
 import { IProduct } from 'src/app/admin/interfaces';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { PublicQueries } from '../..';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { EMPTY_PRODUCT } from 'src/app/core/helpers';
 import { map, Observable, startWith } from 'rxjs';
@@ -13,6 +12,7 @@ import { SearchService } from 'src/app/core/services';
 import { Model } from 'src/app/core/enums';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
+import { PublicQueries } from '../..';
 
 const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit'];
 
@@ -85,7 +85,7 @@ export class CreateRequisitionComponent implements OnInit {
       const productRequisition: IProductRequisition = {
         product: this.selectedProduct,
         quantity: this.requisitionForm.controls.quantity.value
-      }
+      };
       this.productRequisitions.push(productRequisition);
     }
     this.requisitionForm.controls.product.setValue('');
@@ -102,7 +102,7 @@ export class CreateRequisitionComponent implements OnInit {
   public onSubmit(): void {}
 
   private filterProducts(products: IProduct[]): IProduct[] {
-    return products.filter((product) => product.batches.reduce((acc, batch) => acc + batch.quantity, 0));;
+    return products.filter((product) => product.batches.reduce((acc, batch) => acc + batch.quantity, 0));
   }
 
   private checkProductRequisition(product: IProduct, quantity: number): boolean {
