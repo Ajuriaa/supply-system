@@ -7,9 +7,11 @@ import { LoadingComponent, PrimaryButtonComponent, NoResultComponent } from 'src
 import { Model } from 'src/app/core/enums';
 import { PDFHelper } from 'src/app/core/helpers';
 import { SearchService } from 'src/app/core/services';
+import { MatDialog } from '@angular/material/dialog';
 import { IRequisition } from '../../interfaces';
 import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
+import { CancelRequisitionComponent } from '../../components';
 
 const TABLE_COLUMNS = ['state', 'employee', 'boss', 'department', 'document', 'actions'];
 
@@ -37,7 +39,8 @@ export class RequisitionComponent implements OnInit {
     private searchEngine: SearchService,
     private pdfHelper: PDFHelper,
     private nameHelper: NameHelper,
-    private requisitionQuery: RequisitionQueries
+    private requisitionQuery: RequisitionQueries,
+    private dialog: MatDialog
   ){}
 
   ngOnInit(): void {
@@ -63,6 +66,21 @@ export class RequisitionComponent implements OnInit {
 
   public getDepartment(department: string): string {
     return this.nameHelper.capitalizeWords(department);
+  }
+
+  public openCancelRequisitionModal(requisition: IRequisition): void {
+    this.dialog.open(CancelRequisitionComponent, {
+      panelClass: 'dialog-style',
+      data: requisition
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllRequisitions();
+      }
+    });
+  }
+
+  public canCancel(state: string): boolean {
+    return state === 'Pendiente por admin';
   }
 
   private getAllRequisitions(): void {
