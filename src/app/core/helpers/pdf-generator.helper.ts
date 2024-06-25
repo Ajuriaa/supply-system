@@ -104,8 +104,8 @@ export class PDFHelper {
         supplier.phone || 'No Registrado',
         supplier.address || 'No Registrado',
         supplier.rtn || 'No Registrado',
-        this.getDate(supplier.entries[0].date),
-        supplier.entries.length
+        supplier.entries.length > 0 ? this.getDate(supplier.entries[0].date) : 'No Registrado',
+        supplier.entries.length > 0 ? supplier.entries.length : 0
       ];
     });
   }
