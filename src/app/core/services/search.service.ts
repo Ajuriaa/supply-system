@@ -33,7 +33,8 @@ export class SearchService {
         requisition.state.state.toLowerCase().includes(term.toLowerCase()) ||
         requisition.employeeName.toLowerCase().includes(term.toLowerCase()) ||
         requisition.bossName.toLowerCase().includes(term.toLowerCase()) ||
-        requisition.department.toLowerCase().includes(term.toLowerCase())
+        requisition.department.toLowerCase().includes(term.toLowerCase()) ||
+        requisition.employeeId.toString().includes(term)
       );
     }
     return data;
