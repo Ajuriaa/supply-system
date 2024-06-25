@@ -12,8 +12,9 @@ import { IRequisition } from '../../interfaces';
 import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
 import { CancelRequisitionComponent } from '../../components';
+import moment from 'moment';
 
-const TABLE_COLUMNS = ['state', 'employee', 'boss', 'department', 'document', 'actions'];
+const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'document', 'actions'];
 
 @Component({
   selector: 'app-requisition',
@@ -34,6 +35,7 @@ export class RequisitionComponent implements OnInit {
   public requisitions: IRequisition[] = [];
   public filteredRequisitions: IRequisition[] = [];
   public page = 1;
+  public monthlyRequisitions = 1;
 
   constructor(
     private searchEngine: SearchService,
@@ -55,6 +57,9 @@ export class RequisitionComponent implements OnInit {
     window.open(link, "_blank");
   }
 
+  public getDate(date: Date): string {
+    return moment(date).format('DD/MM/YYYY');
+  }
 
   public generatePDF(): void {
     this.pdfHelper.generateRequisitionsPDF(this.filteredRequisitions);
@@ -87,7 +92,15 @@ export class RequisitionComponent implements OnInit {
     this.requisitionQuery.getAllProducts().subscribe((response) => {
       this.requisitions = response.data;
       this.filteredRequisitions = this.requisitions;
+      this.getMonthlyRequisitions();
       this.loading = false;
     });
+  }
+
+  private getMonthlyRequisitions(): void {
+    const currentMonth = moment().month();
+    this.monthlyRequisitions = this.requisitions.filter((requisition) => {
+      return moment(requisition.systemDate).month() === currentMonth;
+    }).length;
   }
 }

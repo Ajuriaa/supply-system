@@ -7,6 +7,7 @@ export interface IRequisition {
   documentUrl?: string;
   employeeName: string;
   bossName: string;
+  systemDate: Date;
   state: IState;
   productRequisition: IProductRequisition[];
 }
