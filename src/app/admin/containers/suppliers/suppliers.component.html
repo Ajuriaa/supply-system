@@ -12,8 +12,8 @@
       />
     </div>
     <div class="available">
-      <p class="panel-title">INFORMACION</p>
-      <p class="panel-label">LOREM IPSUM</p>
+      <p class="panel-title">En el último mes se han hecho</p>
+      <p class="panel-label">{{ monthlyDeliveries }} Entrega{{ monthlyDeliveries > 1 ? 's' : '' }}</p>
     </div>
     <div class="buttons">
       <app-primary-button class="button" (btnClick)="openCreateUpdateSupplierModal()">

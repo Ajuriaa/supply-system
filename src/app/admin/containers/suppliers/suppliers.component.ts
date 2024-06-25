@@ -29,6 +29,7 @@ const TABLE_COLUMNS = ['name', 'email', 'phone', 'address', 'rtn', 'latestEntry'
 export class SuppliersComponent implements OnInit {
   public loading = true;
   public searchInput = '';
+  public monthlyDeliveries = 0;
   public displayedColumns: string[] = TABLE_COLUMNS;
   public suppliers: ISupplier[] = [];
   public filteredSuppliers: ISupplier[] = [];
@@ -89,6 +90,17 @@ export class SuppliersComponent implements OnInit {
       this.suppliers = data;
       this.filteredSuppliers = data;
       this.loading = false;
+      this.monthlyDeliveries = this.suppliers.reduce((acc, supplier) => {
+        const startOfMonth = moment().startOf('month');
+        const now = moment();
+
+        const filteredEntries = supplier.entries.filter(entry => {
+          const entryDate = moment(entry.date);
+          return entryDate.isBetween(startOfMonth, now, null, '[]');
+        });
+
+        return acc + filteredEntries.length;
+      }, 0);
     });
   }
 }
