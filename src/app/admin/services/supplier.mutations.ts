@@ -54,4 +54,24 @@ export class SupplierMutations {
       );
     });
   }
+
+  public deleteSupplier(id: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/delete-supplier`, { id }).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Proveedor eliminado correctamente', 'Listo!');
+            resolve(response);
+          } else {
+            this.toaster.success('Ocurrió un error', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
 }

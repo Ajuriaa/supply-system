@@ -54,4 +54,24 @@ export class ProductMutations {
       );
     });
   }
+
+  public deleteProduct(id: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/delete-product`, { id }).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Producto eliminado correctamente', 'Listo!');
+            resolve(response);
+          } else {
+            this.toaster.success('Ocurrió un error', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
 }

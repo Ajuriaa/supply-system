@@ -11,7 +11,7 @@ import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
 import { SuppliersQueries } from '../../services';
 import { ISupplier } from '../../interfaces';
-import { CreateUpdateSupplierComponent } from '../../components';
+import { CreateUpdateSupplierComponent, DeleteComponent } from '../../components';
 
 const TABLE_COLUMNS = ['name', 'email', 'phone', 'address', 'rtn', 'latestEntry', 'amount', 'actions'];
 
@@ -62,10 +62,21 @@ export class SuppliersComponent implements OnInit {
     return date;
   }
 
-  public openCreateUpdateProductModal(modalType: string = 'create', supplier: ISupplier = EMPTY_SUPPLIER): void {
+  public openCreateUpdateSupplierModal(modalType: string = 'create', supplier: ISupplier = EMPTY_SUPPLIER): void {
     this.dialog.open(CreateUpdateSupplierComponent, {
       panelClass: 'dialog-style',
       data: { supplier, modalType }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllSuppliers();
+      }
+    });
+  }
+
+  public openDeleteProductModal(supplierId: number): void {
+    this.dialog.open(DeleteComponent, {
+      panelClass: 'dialog-style',
+      data: { id: supplierId, type: Model.Supplier }
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getAllSuppliers();

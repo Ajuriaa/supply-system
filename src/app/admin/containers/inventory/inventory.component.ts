@@ -11,7 +11,7 @@ import { EMPTY_PRODUCT, PDFHelper } from 'src/app/core/helpers';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductQueries } from '../../services';
 import { IProduct } from '../../interfaces/product.interfaces';
-import { CreateUpdateProductComponent } from '../../components';
+import { CreateUpdateProductComponent, DeleteComponent } from '../../components';
 
 const TABLE_COLUMNS = ['name', 'group', 'amount', 'unit', 'closestDueDate', 'price', 'actions'];
 
@@ -83,6 +83,17 @@ export class InventoryComponent implements OnInit {
     this.dialog.open(CreateUpdateProductComponent, {
       panelClass: 'dialog-style',
       data: { product, modalType }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllProducts();
+      }
+    });
+  }
+
+  public openDeleteProductModal(productId: number): void {
+    this.dialog.open(DeleteComponent, {
+      panelClass: 'dialog-style',
+      data: { id: productId, type: Model.Product }
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getAllProducts();
