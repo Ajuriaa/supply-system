@@ -42,6 +42,13 @@
       (click)="selectOption('reports')"
     >
     </app-side-nav-button>
+    <app-side-nav-button
+      icon='input'
+      label='Entradas'
+      [selected]="selectedOption === 'input'"
+      (click)="selectOption('input')"
+    >
+    </app-side-nav-button>
     <div class="dot" [style.left.rem]="iconTopPosition"></div>
   </div>
 </div>

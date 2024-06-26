@@ -6,7 +6,8 @@ import {
   InventoryComponent,
   SuppliersComponent,
   RequisitionComponent,
-  ReportsComponent
+  ReportsComponent,
+  InputComponent
 } from './containers';
 
 export const adminRoutes: Routes = [{
@@ -43,6 +44,11 @@ export const adminRoutes: Routes = [{
       path: 'reports',
       title: 'Reportes',
       component: ReportsComponent
+    },
+    {
+      path: 'input/:id',
+      title: 'Entrada',
+      component: InputComponent
     }
   ]
 }];

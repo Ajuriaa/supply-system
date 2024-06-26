@@ -27,8 +27,8 @@ export class SideBarComponent implements OnInit {
     this.selectedOption = option;
     this.animateIcon();
     setTimeout(() => {
-      option === 'history'
-        ? this.router.navigate(['admin/history/0'])
+      option === 'history' || option === 'input'
+        ? this.router.navigate([`admin/${option}/0`])
         : this.router.navigate([`admin/`, option]);
     }, 500);
   }
@@ -80,6 +80,9 @@ export class SideBarComponent implements OnInit {
         break;
       case 'reports':
         this.iconTopPosition = 76;
+        break;
+      case 'input':
+        this.iconTopPosition = 90.5;
         break;
       default:
         this.iconTopPosition = 3.5;
