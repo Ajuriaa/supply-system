@@ -9,6 +9,7 @@ import { Model } from 'src/app/core/enums';
 import moment from 'moment';
 import { EMPTY_PRODUCT, PDFHelper } from 'src/app/core/helpers';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { ProductQueries } from '../../services';
 import { IProduct } from '../../interfaces/product.interfaces';
 import { CreateUpdateProductComponent, DeleteComponent } from '../../components';
@@ -42,7 +43,8 @@ export class InventoryComponent implements OnInit {
     private searchEngine: SearchService,
     private pdfHelper: PDFHelper,
     private productQuery: ProductQueries,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -99,6 +101,10 @@ export class InventoryComponent implements OnInit {
         this.getAllProducts();
       }
     });
+  }
+
+  public goToInput(): void {
+    this.router.navigate(['/admin/input/0']);
   }
 
   private getAllProducts(): void {

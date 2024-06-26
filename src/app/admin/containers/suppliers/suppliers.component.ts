@@ -9,6 +9,7 @@ import { LoadingComponent, PrimaryButtonComponent, NoResultComponent } from 'src
 import { Model } from 'src/app/core/enums';
 import moment from 'moment';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { SuppliersQueries } from '../../services';
 import { ISupplier } from '../../interfaces';
 import { CreateUpdateSupplierComponent, DeleteComponent } from '../../components';
@@ -39,7 +40,8 @@ export class SuppliersComponent implements OnInit {
     private searchEngine: SearchService,
     private pdfHelper: PDFHelper,
     private supplierQuery: SuppliersQueries,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ){}
 
   ngOnInit(): void {
@@ -83,6 +85,10 @@ export class SuppliersComponent implements OnInit {
         this.getAllSuppliers();
       }
     });
+  }
+
+  public goToInput(supplierId: number): void {
+    this.router.navigate(['/admin/input', supplierId]);
   }
 
   private getAllSuppliers(): void {

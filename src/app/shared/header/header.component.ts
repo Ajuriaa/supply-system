@@ -64,6 +64,9 @@ export class HeaderComponent implements OnInit {
       case url.includes('reports'):
         this.title = 'Reportes';
         break;
+      case url.includes('input'):
+        this.title = 'Entrada';
+        break;
       default:
         this.title = 'Sistema de Proveduría';
     }

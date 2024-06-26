@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { SideNavButtonComponent } from '../buttons';
 
 @Component({
@@ -15,7 +15,13 @@ export class SideBarComponent implements OnInit {
   public selectedOption = 'dashboard';
   public iconTopPosition = 4.5;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) {
+        this.routeOption();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.selectedOption = this.router.url.split('/')[2];
@@ -54,6 +60,9 @@ export class SideBarComponent implements OnInit {
         break;
       case url.includes('reports'):
         this.selectedOption = 'reports';
+        break;
+      case url.includes('input'):
+        this.selectedOption = 'input';
         break;
       default:
         this.selectedOption = 'dashboard';
