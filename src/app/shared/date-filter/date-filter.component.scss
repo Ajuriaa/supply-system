@@ -1,14 +1,9 @@
 .container {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.in-vehicle {
   flex-direction: row;
-  width: 35rem;
+  gap: 2rem;
 
-  .field {
-    width: 50%;
+  .width {
+    width: 18rem;
   }
 }

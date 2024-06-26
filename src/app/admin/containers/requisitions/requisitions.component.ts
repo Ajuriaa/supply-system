@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { LoadingComponent, PrimaryButtonComponent, NoResultComponent } from 'src/app/shared';
+import { LoadingComponent, PrimaryButtonComponent, NoResultComponent, DateFilterComponent } from 'src/app/shared';
 import { Model } from 'src/app/core/enums';
 import { PDFHelper } from 'src/app/core/helpers';
 import { SearchService } from 'src/app/core/services';
@@ -26,7 +26,7 @@ const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'docum
     LoadingComponent, CommonModule, FormsModule,
     PrimaryButtonComponent, NoResultComponent, MatTableModule,
     NgxPaginationModule, MatFormFieldModule, MatOptionModule,
-    MatSelectModule
+    MatSelectModule, DateFilterComponent
   ],
   providers: [PDFHelper, NameHelper],
   templateUrl: './requisitions.component.html',
@@ -107,10 +107,27 @@ export class RequisitionComponent implements OnInit {
     this.filteredRequisitions = this.requisitions.filter(requisition => requisition.state.state === filter);
   }
 
+  public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {
+    if(dates.startDate && dates.endDate) {
+      this.filteredRequisitions = this.requisitions.filter(
+        (requisition) => {
+          const requestDate = moment.utc(requisition.systemDate);
+          return moment(requestDate).isBetween(dates.startDate, dates.endDate, null, '[]');
+        }
+      );
+    } else {
+      this.filteredRequisitions = this.requisitions;
+    }
+    this.page = 1;
+  }
+
   private getAllRequisitions(): void {
     this.requisitionQuery.getAllProducts().subscribe((response) => {
+      const currentMonth = moment().month();
       this.requisitions = response.data;
-      this.filteredRequisitions = this.requisitions;
+      this.filteredRequisitions = this.requisitions.filter((requisition) => {
+        return moment(requisition.systemDate).month() === currentMonth;
+      })
       this.getMonthlyRequisitions();
       this.pending = this.requisitions.filter((requisition) => requisition.state.state === 'Pendiente por admin').length;
       this.loading = false;
