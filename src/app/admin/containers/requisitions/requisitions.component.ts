@@ -9,6 +9,9 @@ import { PDFHelper } from 'src/app/core/helpers';
 import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
 import moment from 'moment';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { IRequisition } from '../../interfaces';
 import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
@@ -22,7 +25,8 @@ const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'docum
   imports: [
     LoadingComponent, CommonModule, FormsModule,
     PrimaryButtonComponent, NoResultComponent, MatTableModule,
-    NgxPaginationModule
+    NgxPaginationModule, MatFormFieldModule, MatOptionModule,
+    MatSelectModule
   ],
   providers: [PDFHelper, NameHelper],
   templateUrl: './requisitions.component.html',
@@ -36,6 +40,9 @@ export class RequisitionComponent implements OnInit {
   public filteredRequisitions: IRequisition[] = [];
   public page = 1;
   public monthlyRequisitions = 1;
+  public selectedFilter = 'Todos';
+  public pending = 0;
+  public filterOptions = ['Todos', 'Pendiente por jefe', 'Pendiente por admin', 'Cancelada', 'Finalizada', 'Activa'];
 
   constructor(
     private searchEngine: SearchService,
@@ -88,11 +95,24 @@ export class RequisitionComponent implements OnInit {
     return state === 'Pendiente por admin';
   }
 
+  public canEdit(state: string): boolean {
+    return state === 'Pendiente por admin' || state === 'Pendiente por jefe';
+  }
+
+  public onFilterChange(filter: string): void {
+    if (filter === 'Todos') {
+      this.filteredRequisitions = this.requisitions;
+      return;
+    }
+    this.filteredRequisitions = this.requisitions.filter(requisition => requisition.state.state === filter);
+  }
+
   private getAllRequisitions(): void {
     this.requisitionQuery.getAllProducts().subscribe((response) => {
       this.requisitions = response.data;
       this.filteredRequisitions = this.requisitions;
       this.getMonthlyRequisitions();
+      this.pending = this.requisitions.filter((requisition) => requisition.state.state === 'Pendiente por admin').length;
       this.loading = false;
     });
   }
