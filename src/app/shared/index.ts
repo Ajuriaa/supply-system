@@ -6,3 +6,4 @@ export * from './header/header.component';
 export * from  './file-drop/file-drop.component';
 export * from './notification-card/notification-card.component';
 export * from './notifications/notifications.component';
+export * from './date-filter/date-filter.component';

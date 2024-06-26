@@ -215,3 +215,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     font-weight: bold;
   }
 }
+
+.date-filter {
+  position: absolute;
+  z-index: 3;
+  left: 4rem;
+  bottom: 2rem;
+}
