@@ -11,7 +11,7 @@ import { NotificationsComponent } from '../';
   imports: [NotificationsComponent, CommonModule],
   providers: [NameHelper, cookieHelper],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent implements OnInit {
   public position = this.cookieHelper.getPosition();
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
     private cookieHelper: cookieHelper,
     public nameHelper: NameHelper,
     private router: Router
-  ){
+  ) {
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         this.setTitle();
@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit {
 
   private setTitle(): void {
     const url = this.router.url;
-    switch(true) {
+    switch (true) {
       case url.includes('dashboard'):
         this.title = 'Dashboard';
         break;
@@ -60,6 +60,9 @@ export class HeaderComponent implements OnInit {
         break;
       case url.includes('inventory'):
         this.title = 'Inventario';
+        break;
+      case url.includes('reports'):
+        this.title = 'Reportes';
         break;
       default:
         this.title = 'Sistema de Proveduría';

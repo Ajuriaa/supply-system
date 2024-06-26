@@ -35,6 +35,13 @@
       (click)="selectOption('history')"
     >
     </app-side-nav-button>
+    <app-side-nav-button
+      icon='report'
+      label='Reportes'
+      [selected]="selectedOption === 'reports'"
+      (click)="selectOption('reports')"
+    >
+    </app-side-nav-button>
     <div class="dot" [style.left.rem]="iconTopPosition"></div>
   </div>
 </div>

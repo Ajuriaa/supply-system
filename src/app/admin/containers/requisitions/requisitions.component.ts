@@ -8,11 +8,11 @@ import { Model } from 'src/app/core/enums';
 import { PDFHelper } from 'src/app/core/helpers';
 import { SearchService } from 'src/app/core/services';
 import { MatDialog } from '@angular/material/dialog';
+import moment from 'moment';
 import { IRequisition } from '../../interfaces';
 import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
 import { CancelRequisitionComponent } from '../../components';
-import moment from 'moment';
 
 const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'document', 'actions'];
 

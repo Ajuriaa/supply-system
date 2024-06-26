@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SideNavButtonComponent } from '../buttons';
@@ -9,15 +9,13 @@ import { SideNavButtonComponent } from '../buttons';
   standalone: true,
   imports: [MatSidenavModule, SideNavButtonComponent, CommonModule],
   templateUrl: './side-bar.component.html',
-  styleUrl: './side-bar.component.scss'
+  styleUrl: './side-bar.component.scss',
 })
 export class SideBarComponent implements OnInit {
   public selectedOption = 'dashboard';
   public iconTopPosition = 4.5;
 
-  constructor(
-    private router: Router
-  ){}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
     this.selectedOption = this.router.url.split('/')[2];
@@ -29,7 +27,9 @@ export class SideBarComponent implements OnInit {
     this.selectedOption = option;
     this.animateIcon();
     setTimeout(() => {
-      option === 'history' ? this.router.navigate(['admin/history/0']) : this.router.navigate([`admin/`, option]);
+      option === 'history'
+        ? this.router.navigate(['admin/history/0'])
+        : this.router.navigate([`admin/`, option]);
     }, 500);
   }
 
@@ -39,7 +39,7 @@ export class SideBarComponent implements OnInit {
 
   private routeOption(): void {
     const url = this.router.url;
-    switch(true) {
+    switch (true) {
       case url.includes('history'):
         this.selectedOption = 'history';
         break;
@@ -52,12 +52,14 @@ export class SideBarComponent implements OnInit {
       case url.includes('requisitions'):
         this.selectedOption = 'requisitions';
         break;
+      case url.includes('reports'):
+        this.selectedOption = 'reports';
+        break;
       default:
         this.selectedOption = 'dashboard';
     }
     this.animateIcon();
   }
-
 
   private animateIcon(): void {
     switch (this.selectedOption) {
@@ -76,6 +78,11 @@ export class SideBarComponent implements OnInit {
       case 'history':
         this.iconTopPosition = 61.5;
         break;
+      case 'reports':
+        this.iconTopPosition = 76;
+        break;
+      default:
+        this.iconTopPosition = 3.5;
     }
   }
 }

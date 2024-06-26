@@ -5,7 +5,8 @@ import {
   HistoryComponent,
   InventoryComponent,
   SuppliersComponent,
-  RequisitionComponent
+  RequisitionComponent,
+  ReportsComponent
 } from './containers';
 
 export const adminRoutes: Routes = [{
@@ -37,6 +38,11 @@ export const adminRoutes: Routes = [{
       path: 'requisitions',
       title: 'Requisiciones',
       component: RequisitionComponent
+    },
+    {
+      path: 'reports',
+      title: 'Reportes',
+      component: ReportsComponent
     }
   ]
 }];
