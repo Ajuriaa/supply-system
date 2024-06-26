@@ -79,10 +79,10 @@ export class PDFHelper {
     this.generatePDF(formattedVehicles, columns, 'Listado de Productos',);
   }
 
-  public generateHistoryPDF(history: any[]): void {
+  public generateHistoryPDF(history: any[], start: Date, end: Date): void {
     const columns = ['Fecha', 'Producto', 'Unidad', 'Tipo', 'Cantidad Inicial', 'Cantidad', 'Cantidad Final'];
     const formattedHistory = this.formatHistoryForPDF(history);
-    this.generatePDF(formattedHistory, columns, 'Historial de Productos');
+    this.generatePDF(formattedHistory, columns, 'Historial de Productos', true, start, end);
   }
 
   private formatHistoryForPDF(history: any[]) {

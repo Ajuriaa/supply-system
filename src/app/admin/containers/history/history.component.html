@@ -12,8 +12,12 @@
       />
     </div>
     <div class="available">
-      <p class="panel-title">INFORMACION</p>
-      <p class="panel-label">LOREM IPSUM</p>
+      <p class="panel-title">Salidas el último mes</p>
+      <p class="panel-label">{{ monthOutput }}</p>
+    </div>
+    <div class="available">
+      <p class="panel-title">Entradas el último mes</p>
+      <p class="panel-label">{{ monthInput }}</p>
     </div>
     <div class="buttons">
       <app-primary-button class="button" (btnClick)="generatePDF()">IMPRIMIR LISTADO</app-primary-button>
@@ -90,4 +94,5 @@
     >
     </pagination-controls>
   </section>
+  <app-date-filter class="date-filter" (dateRangeChanged)="filterDates($event)"></app-date-filter>
 </div>

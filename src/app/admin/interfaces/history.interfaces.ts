@@ -16,3 +16,13 @@ export interface IHistory {
   outputs: IOutput[];
 }
 
+export interface IMergedHistory {
+  date: Date;
+  product: string;
+  unit: string;
+  initialQuantity: number;
+  type: string;
+  quantity: number;
+  finalQuantity: number;
+  document: string
+}

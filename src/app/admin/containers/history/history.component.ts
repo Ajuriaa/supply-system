@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { Model } from 'src/app/core/enums';
 import { SearchService } from 'src/app/core/services';
-import { LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { EMPTY_HISTORY, PDFHelper } from 'src/app/core/helpers';
+import { DateFilterComponent, LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
+import { EMPTY_HISTORY, EMPTY_MERGED_HISTORY, PDFHelper } from 'src/app/core/helpers';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 import { HistoryQueries } from '../../services';
-import { IHistory } from '../../interfaces';
+import { IHistory, IMergedHistory } from '../../interfaces';
 
 const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'document'];
 
@@ -20,7 +20,7 @@ const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'qu
   imports: [
     LoadingComponent, CommonModule, PrimaryButtonComponent,
     MatInputModule, FormsModule, NgxPaginationModule,
-    NoResultComponent, MatTableModule
+    NoResultComponent, MatTableModule, DateFilterComponent
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss'
@@ -30,10 +30,13 @@ export class HistoryComponent implements OnInit {
   public searchInput = '';
   public displayedColumns: string[] = TABLE_COLUMNS;
   public history: IHistory = EMPTY_HISTORY;
-  public mergedHistory: any = [];
-  public filteredHistory: any = EMPTY_HISTORY;
+  public mergedHistory: IMergedHistory[] = [];
+  public filteredHistory: IMergedHistory[] = [];
   public page = 1;
-moment: any;
+  public end = new Date();
+  public start = new Date(this.end.getFullYear(), this.end.getMonth(), 1);
+  public monthInput = 0;
+  public monthOutput = 0;
 
   constructor(
     private searchEngine: SearchService,
@@ -44,7 +47,6 @@ moment: any;
   ngOnInit(): void {
     this.historyQuery.getHistory().subscribe((data) => {
       this.history = data;
-      this.filteredHistory = data;
       this.mergeHistory();
     });
   }
@@ -54,7 +56,7 @@ moment: any;
   }
 
   public generatePDF(): void {
-    this.pdfHelper.generateHistoryPDF(this.filteredHistory);
+    this.pdfHelper.generateHistoryPDF(this.filteredHistory, this.start, this.end);
   }
 
   public goToUrl(link: string): void {
@@ -65,7 +67,27 @@ moment: any;
     return moment.utc(date).format('DD/MM/YYYY');
   }
 
+  public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {
+    if(dates.startDate && dates.endDate) {
+      this.start = dates.startDate;
+      this.end = dates.endDate;
+      this.filteredHistory = this.mergedHistory.filter(
+        (history) => {
+          const date = moment.utc(history.date);
+          return moment(date).isBetween(dates.startDate, dates.endDate, null, '[]');
+        }
+      );
+    } else {
+      this.filteredHistory = this.mergedHistory;
+    }
+    this.page = 1;
+  }
+
   private mergeHistory(): void {
+    const month = moment().month();
+    this.monthInput = this.history.entries.filter(entry => moment(entry.date).month() === month).length;
+    this.monthOutput = this.history.outputs.filter(output => moment(output.date).month() === month).length;
+
     this.history.entries.forEach((entry) => {
       entry.productsEntry.forEach(productEntry => {
         this.mergedHistory.push({
@@ -96,7 +118,7 @@ moment: any;
 
     this.mergedHistory.sort((a: any, b: any) => moment(b.date).diff(moment(a.date)));
 
-    this.filteredHistory = this.mergedHistory;
+    this.filteredHistory = this.mergedHistory.filter(history => moment(history.date).month() === month);
     this.loading = false;
   }
 }
