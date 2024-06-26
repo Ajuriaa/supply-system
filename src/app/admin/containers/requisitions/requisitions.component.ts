@@ -127,7 +127,7 @@ export class RequisitionComponent implements OnInit {
       this.requisitions = response.data;
       this.filteredRequisitions = this.requisitions.filter((requisition) => {
         return moment(requisition.systemDate).month() === currentMonth;
-      })
+      });
       this.getMonthlyRequisitions();
       this.pending = this.requisitions.filter((requisition) => requisition.state.state === 'Pendiente por admin').length;
       this.loading = false;
