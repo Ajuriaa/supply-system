@@ -28,7 +28,7 @@ export const EMPTY_MERGED_HISTORY: IMergedHistory = {
   quantity: 0,
   finalQuantity: 0,
   document: ""
-}
+};
 
 export const EMPTY_SUPPLIER: ISupplier = {
   id: 0,

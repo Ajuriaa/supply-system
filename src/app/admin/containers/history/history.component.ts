@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Model } from 'src/app/core/enums';
 import { SearchService } from 'src/app/core/services';
 import { DateFilterComponent, LoadingComponent, NoResultComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { EMPTY_HISTORY, EMPTY_MERGED_HISTORY, PDFHelper } from 'src/app/core/helpers';
+import { EMPTY_HISTORY, PDFHelper } from 'src/app/core/helpers';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
