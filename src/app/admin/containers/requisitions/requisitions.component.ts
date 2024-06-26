@@ -43,6 +43,8 @@ export class RequisitionComponent implements OnInit {
   public selectedFilter = 'Todos';
   public pending = 0;
   public filterOptions = ['Todos', 'Pendiente por jefe', 'Pendiente por admin', 'Cancelada', 'Finalizada', 'Activa'];
+  public end = new Date();
+  public start = new Date(this.end.getFullYear(), this.end.getMonth(), 1);
 
   constructor(
     private searchEngine: SearchService,
@@ -69,7 +71,7 @@ export class RequisitionComponent implements OnInit {
   }
 
   public generatePDF(): void {
-    this.pdfHelper.generateRequisitionsPDF(this.filteredRequisitions);
+    this.pdfHelper.generateRequisitionsPDF(this.filteredRequisitions, this.start, this.end);
   }
 
   public getName(fullName: string): string {
@@ -109,6 +111,8 @@ export class RequisitionComponent implements OnInit {
 
   public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {
     if(dates.startDate && dates.endDate) {
+      this.start = dates.startDate;
+      this.end = dates.endDate;
       this.filteredRequisitions = this.requisitions.filter(
         (requisition) => {
           const requestDate = moment.utc(requisition.systemDate);

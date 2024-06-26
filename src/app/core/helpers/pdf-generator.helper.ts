@@ -11,8 +11,10 @@ export class PDFHelper {
   private isFirstPageDrawn = false;
   constructor() {}
 
-  public generatePDF(formattedData: any[], columns: string[], title: string): void {
+  public generatePDF(formattedData: any[], columns: string[], title: string, dates = false, start?: Date, end?: Date): void {
     this.isFirstPageDrawn = false;
+    let subtitle = '';
+    dates ? subtitle += `${moment(start).format('DD/MM/YYYY')} - ${moment(end).format('DD/MM/YYYY')}` : '';
     const doc = new jsPDF('landscape');
     doc.setTextColor(40);
     const blue = '#88CFE0';
@@ -32,6 +34,7 @@ export class PDFHelper {
           data.settings.margin.top = 4;
           const centerX = pageSize.width / 2;
           doc.text(title, centerX - (doc.getTextWidth(title) / 2), 25);
+          subtitle.length > 0 ? doc.text(subtitle, centerX - (doc.getTextWidth(subtitle) / 2), 35) : '';
 
           doc.addImage('assets/pdf.jpg', 'JPEG', 20, 5, 40, 40);
           doc.addImage('assets/pdf2.jpg', 'JPEG', pageSize.width-50, 2, 40, 40);
@@ -64,10 +67,10 @@ export class PDFHelper {
     this.generatePDF(formattedSuppliers, columns, 'Listado de Proveedores');
   }
 
-  public generateRequisitionsPDF(requisitions: IRequisition[]): void {
-    const columns = ['Estado', 'Empleado', 'Jefe', 'Departamento'];
+  public generateRequisitionsPDF(requisitions: IRequisition[], start: Date, end: Date): void {
+    const columns = ['Fecha', 'Estado', 'Empleado', 'Jefe', 'Departamento'];
     const formattedSuppliers = this.formatRequisitionsForPDF(requisitions);
-    this.generatePDF(formattedSuppliers, columns, 'Listado de Requisiciones');
+    this.generatePDF(formattedSuppliers, columns, 'Listado de Requisiciones', true, start, end);
   }
 
   public generateProductsPDF(products: IProduct[]): void {
@@ -113,6 +116,7 @@ export class PDFHelper {
   public formatRequisitionsForPDF(requisitions: IRequisition[]) {
     return requisitions.map(requisition => {
       return [
+        this.getDate(requisition.systemDate),
         requisition.state.state,
         requisition.employeeName,
         requisition.bossName,
