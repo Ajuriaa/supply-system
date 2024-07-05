@@ -1,13 +1,27 @@
-.first {
-  width: 35rem;
-}
+@import 'global';
 
-.file-uploader {
-  width: 50%;
-}
+.container {
+  gap: 2rem;
 
-.form {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
+  .btn {
+    width: 25rem;
+  }
+
+  .first {
+    width: 35rem;
+  }
+
+  .file-uploader {
+    width: 50%;
+  }
+
+  .form {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .error {
+    font-size: 1.5rem;
+  }
 }

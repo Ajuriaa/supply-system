@@ -4,9 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { EMPTY_PRODUCT, EMPTY_SUPPLIER } from 'src/app/core/helpers';
 import { SearchService } from 'src/app/core/services';
-import { IProduct, IProductRequisition, ISupplier } from '../../interfaces';
 import { Model } from 'src/app/core/enums';
-import { ProductQueries, SuppliersQueries } from '../../services';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -17,9 +15,17 @@ import { FileDropComponent, LoadingComponent, PrimaryButtonComponent } from 'src
 import { ActivatedRoute } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import moment from 'moment';
+import { ProductQueries, SuppliersQueries } from '../../services';
+import { IProduct, ISupplier } from '../../interfaces';
 
 const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit', 'price', 'dueDate', 'actions'];
-
+export interface IEntryData {
+  product: IProduct;
+  quantity: number;
+  price: number;
+  dueDate: Date;
+}
 @Component({
   selector: 'app-input',
   standalone: true,
@@ -47,9 +53,9 @@ export class InputComponent implements OnInit {
   public requisitionForm!: FormGroup;
   public displayedColumns: string[] = TABLE_COLUMNS;
   public selectedProduct: IProduct = EMPTY_PRODUCT;
-  public productRequisitions: IProductRequisition[] = [];
-  public requisitionCreated = false;
+  public productEntries: any[] = [];
   public invoice!: File;
+  public noInvoice = false;
   public page = 1;
 
   constructor(
@@ -80,15 +86,17 @@ export class InputComponent implements OnInit {
     this.getSuppliers();
   }
 
-  public editProduct(productRequisition: IProductRequisition): void {
-    this.selectedProduct = productRequisition.product;
-    this.requisitionForm.controls.product.setValue(productRequisition.product.name);
-    this.requisitionForm.controls.quantity.setValue(productRequisition.quantity);
-    this.productRequisitions = this.productRequisitions.filter((product) => product.product.id !== productRequisition.product.id);
+  public editProduct(entry: IEntryData): void {
+    this.selectedProduct = entry.product;
+    this.requisitionForm.controls.product.setValue(entry.product.name);
+    this.requisitionForm.controls.quantity.setValue(entry.quantity);
+    this.requisitionForm.controls.price.setValue(entry.price);
+    this.requisitionForm.controls.dueDate.setValue(entry.dueDate);
+    this.productEntries = this.productEntries.filter((product) => product.product.id !== entry.product.id);
   }
 
-  public removeProduct(productRequisition: IProductRequisition): void {
-    this.productRequisitions = this.productRequisitions.filter((requisition) => requisition.product.id !== productRequisition.product.id);
+  public removeProduct(entry: IEntryData): void {
+    this.productEntries = this.productEntries.filter((requisition) => requisition.product.id !== entry.product.id);
   }
 
   public selectProduct(product: IProduct): void {
@@ -103,6 +111,10 @@ export class InputComponent implements OnInit {
     this.invoice = files[0];
   }
 
+  public getDate(date: Date): string {
+    return moment.utc(date).format('DD/MM/YYYY');
+  }
+
   public addProduct(): void {
     this.error = false;
     if (this.requisitionForm.invalid) {
@@ -111,20 +123,32 @@ export class InputComponent implements OnInit {
     }
     const alreadyInTable = this.checkProductRequisition(this.selectedProduct, this.requisitionForm.controls.quantity.value);
 
-    // if(!alreadyInTable) {
-    //   const productRequisition: IProductRequisition = {
-    //     id: 0,
-    //     requisition: ,
-    //     product: this.selectedProduct,
-    //     quantity: this.requisitionForm.controls.quantity.value
-    //   };
-    //   this.productRequisitions.push(productRequisition);
-    // }
+    if(!alreadyInTable) {
+      const productRequisition: IEntryData = {
+        product: this.selectedProduct,
+        quantity: this.requisitionForm.controls.quantity.value,
+        price: this.requisitionForm.controls.price.value,
+        dueDate: this.requisitionForm.controls.dueDate.value
+      };
+      this.productEntries.push(productRequisition);
+    }
     this.requisitionForm.controls.product.setValue('');
     this.requisitionForm.controls.quantity.setValue(0);
+    this.requisitionForm.controls.price.setValue(0);
+    this.requisitionForm.controls.dueDate.setValue('');
   }
 
   public continue(): void {
+    this.error = false;
+    this.noInvoice = false;
+
+    if(this.entryForm.invalid) {
+      this.error = true;
+      return;
+    } else if(this.invoice === undefined) {
+      this.noInvoice = true;
+      return;
+    }
     this.showProducts = true;
   }
 
@@ -136,9 +160,9 @@ export class InputComponent implements OnInit {
   }
 
   private checkProductRequisition(product: IProduct, quantity: number): boolean {
-    const productIndex = this.productRequisitions.findIndex((productRequisition) => productRequisition.product.id === product.id);
+    const productIndex = this.productEntries.findIndex((productRequisition) => productRequisition.product.id === product.id);
     if (productIndex !== -1) {
-      this.productRequisitions[productIndex].quantity += quantity;
+      this.productEntries[productIndex].quantity += quantity;
       return true;
     }
     return false;
@@ -153,7 +177,7 @@ export class InputComponent implements OnInit {
         this.selectedSupplier = EMPTY_SUPPLIER;
         return;
       }
-      this.selectedSupplier = this.suppliers.find((supplier) => supplier.id === supplierId) || EMPTY_SUPPLIER
+      this.selectedSupplier = this.suppliers.find((supplier) => supplier.id === supplierId) || EMPTY_SUPPLIER;
       this.supplierControl.patchValue(this.selectedSupplier.name);
       this.showProducts = true;
     });

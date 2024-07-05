@@ -1,6 +1,6 @@
 <app-loading *ngIf="loading"></app-loading>
 
-<div class="container" *ngIf="!loading && !requisitionCreated">
+<div class="container" *ngIf="!loading">
   <form [formGroup]="entryForm" class="form" *ngIf="!showProducts">
     <mat-form-field class="field first">
       <mat-label>Proveedor</mat-label>
@@ -50,7 +50,7 @@
       />
     </mat-form-field>
     <mat-form-field class="field">
-      <mat-label>Precio</mat-label>
+      <mat-label>Precio Unitario</mat-label>
       <input
         type="number"
         matInput
@@ -59,7 +59,7 @@
       />
     </mat-form-field>
     <mat-form-field class="field">
-      <mat-label>Fecha</mat-label>
+      <mat-label>Fecha de vencimiento</mat-label>
       <input formControlName="dueDate" matInput [matDatepicker]="picker">
       <mat-hint>DD/MM/YYYY</mat-hint>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -67,11 +67,12 @@
     </mat-form-field>
   </form>
   <app-file-drop class="file-uploader" (selectedFiles)="getFiles($event)" *ngIf="!showProducts"></app-file-drop>
-  <app-primary-button (btnClick)="continue()" *ngIf="!showProducts">Continuar</app-primary-button>
+  <app-primary-button class="btn" (btnClick)="continue()" *ngIf="!showProducts">Continuar</app-primary-button>
   <app-primary-button class="btn" (btnClick)="addProduct()" *ngIf="showProducts">Agregar Producto</app-primary-button>
   <mat-error class="error" *ngIf="error">Recuerda llenar todos los campos requeridos*</mat-error>
+  <mat-error class="error" *ngIf="noInvoice">Recuerda adjuntar la factura*</mat-error>
   <div class="table-container">
-    <table mat-table [dataSource]="productRequisitions | paginate: { itemsPerPage: 5, currentPage: page }" class="table" *ngIf="productRequisitions.length > 0">
+    <table mat-table [dataSource]="productEntries | paginate: { itemsPerPage: 5, currentPage: page }" class="table" *ngIf="productEntries.length > 0">
       <ng-container matColumnDef="product">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Producto</th>
         <td mat-cell *matCellDef="let element" class="table-cell">
@@ -90,6 +91,20 @@
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Tipo</th>
         <td mat-cell *matCellDef="let element" class="table-cell">
           {{ element.product.group.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Precio Unitario</th>
+        <td mat-cell *matCellDef="let element" class="table-cell">
+          {{ element.price }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dueDate">
+        <th mat-header-cell *matHeaderCellDef class="table-cell title">Fecha Vencimiento</th>
+        <td mat-cell *matCellDef="let element" class="table-cell">
+          {{ getDate(element.dueDate) }}
         </td>
       </ng-container>
 
@@ -112,7 +127,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
     <pagination-controls
-      *ngIf="productRequisitions.length > 0"
+      *ngIf="productEntries.length > 0"
       class="my-pagination"
       (pageChange)="page = $event"
       previousLabel="Anterior"
@@ -120,9 +135,5 @@
     >
     </pagination-controls>
   </div>
-  <app-primary-button class="btn" *ngIf="productRequisitions.length> 0">Crear Requisición</app-primary-button>
-</div>
-
-<div class="container" *ngIf="!loading && requisitionCreated">
-  <p class="created-label">Requisición creada Correctamente!</p>
+  <app-primary-button class="btn" *ngIf="productEntries.length> 0">Crear Entrada</app-primary-button>
 </div>
