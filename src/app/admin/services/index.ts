@@ -6,3 +6,4 @@ export * from './requisitions.queries';
 export * from './requisition.mutations';
 export * from './history.queries';
 export * from './uploader.mutation';
+export * from './entry.mutations';
