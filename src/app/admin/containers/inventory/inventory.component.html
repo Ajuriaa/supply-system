@@ -83,6 +83,7 @@
         <td mat-cell *matCellDef="let element" class="table-cell icons">
           <i class="uil uil-plus-circle" (click)="goToInput()"></i>
           <i class="uil uil-edit" (click)="openCreateUpdateProductModal('edit', element)"></i>
+          <i class="uil uil-minus-circle" *ngIf="getAmount(element) > 0" (click)="openRemoveProductsModal(element)"></i>
           <i class="uil uil-trash-alt" *ngIf="getAmount(element) === 0" (click)="openDeleteProductModal(element.id)"></i>
         </td>
       </ng-container>

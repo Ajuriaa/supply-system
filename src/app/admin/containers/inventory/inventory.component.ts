@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProductQueries } from '../../services';
 import { IProduct } from '../../interfaces/product.interfaces';
-import { CreateUpdateProductComponent, DeleteComponent } from '../../components';
+import { CreateUpdateProductComponent, DeleteComponent, RemoveProductsComponent } from '../../components';
 
 const TABLE_COLUMNS = ['name', 'group', 'amount', 'unit', 'closestDueDate', 'price', 'actions'];
 
@@ -105,6 +105,17 @@ export class InventoryComponent implements OnInit {
 
   public goToInput(): void {
     this.router.navigate(['/admin/input/0']);
+  }
+
+  public openRemoveProductsModal(product: IProduct): void {
+    this.dialog.open(RemoveProductsComponent, {
+      panelClass: 'dialog-style',
+      data: product
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllProducts();
+      }
+    });
   }
 
   private getAllProducts(): void {

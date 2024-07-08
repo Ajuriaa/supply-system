@@ -1,8 +1,15 @@
-import { IGroup, IHistory, IMergedHistory, IProduct, ISupplier } from "src/app/admin/interfaces";
+import { IBatch, IGroup, IHistory, IMergedHistory, IProduct, ISupplier } from "src/app/admin/interfaces";
 
 export const EMPTY_GROUP: IGroup = {
   id: 0,
   name: ""
+};
+
+export const EMPTY_BATCH: IBatch = {
+  id: 0,
+  due: new Date(),
+  quantity: 0,
+  price: 0
 };
 
 export const EMPTY_PRODUCT: IProduct = {
