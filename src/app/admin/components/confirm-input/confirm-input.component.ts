@@ -2,9 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { IEntry } from '../../interfaces';
 import { EntryMutations } from '../../services';
-import { IEntryData } from '../../containers';
+import { ICreateEntry, IEntryData } from '../../containers';
 
 export interface IProductEntryWithIds {
   entryId: number;
@@ -39,7 +38,7 @@ export class ConfirmInputComponent {
   constructor(
     private dialogRef: MatDialogRef<ConfirmInputComponent>,
     private entryMutation: EntryMutations,
-    @Inject(MAT_DIALOG_DATA) public data: { entry: IEntry, entryData: IEntryData[] }
+    @Inject(MAT_DIALOG_DATA) public data: { entry: ICreateEntry, entryData: IEntryData[] }
   ){}
 
   public async onConfirm(): Promise<void> {
@@ -64,7 +63,7 @@ export class ConfirmInputComponent {
         productId: entryData.product.id,
         quantity: entryData.quantity,
         price: entryData.price,
-        currentQuantity: entryData.product.batches.reduce((acc, batch) => acc + batch.quantity, 0)
+        currentQuantity: entryData.product.batches.reduce((acc, batch) => acc + batch.quantity, 0) + entryData.quantity
       });
 
       this.batches.push({

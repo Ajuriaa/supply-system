@@ -135,5 +135,7 @@
     >
     </pagination-controls>
   </div>
-  <app-primary-button class="btn" *ngIf="productEntries.length> 0">Crear Entrada</app-primary-button>
+  <app-primary-button class="btn" *ngIf="productEntries.length> 0" (btnClick)="onSubmit()">
+    Crear Entrada
+  </app-primary-button>
 </div>

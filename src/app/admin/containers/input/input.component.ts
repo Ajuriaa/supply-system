@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { EMPTY_PRODUCT, EMPTY_SUPPLIER } from 'src/app/core/helpers';
 import { SearchService } from 'src/app/core/services';
-import { Model } from 'src/app/core/enums';
+import { Model, Upload } from 'src/app/core/enums';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,8 +16,11 @@ import { ActivatedRoute } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import moment from 'moment';
-import { ProductQueries, SuppliersQueries } from '../../services';
+import { environment } from 'src/environments/environments';
+import { ProductQueries, SuppliersQueries, UploaderService } from '../../services';
 import { IProduct, ISupplier } from '../../interfaces';
+import { ConfirmInputComponent } from '../../components';
+import { FileNameHelper } from '../../helpers';
 
 const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit', 'price', 'dueDate', 'actions'];
 export interface IEntryData {
@@ -26,6 +29,13 @@ export interface IEntryData {
   price: number;
   dueDate: Date;
 }
+
+export interface ICreateEntry {
+  invoiceUrl: string;
+  date: Date;
+  supplierId: number;
+}
+
 @Component({
   selector: 'app-input',
   standalone: true,
@@ -36,7 +46,7 @@ export interface IEntryData {
     NgxPaginationModule, MatTableModule, MatDatepickerModule,
     FileDropComponent
   ],
-  providers: [provideNativeDateAdapter()],
+  providers: [provideNativeDateAdapter(), FileNameHelper],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss'
 })
@@ -56,6 +66,7 @@ export class InputComponent implements OnInit {
   public productEntries: any[] = [];
   public invoice!: File;
   public noInvoice = false;
+  public fileUrl = environment.filesUrl;
   public page = 1;
 
   constructor(
@@ -64,7 +75,9 @@ export class InputComponent implements OnInit {
     private dialog: MatDialog,
     private productQuery: ProductQueries,
     private supplierQuery: SuppliersQueries,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private uploaderService: UploaderService,
+    private fileNameHelper: FileNameHelper
   ) {}
 
   ngOnInit(): void {
@@ -132,10 +145,7 @@ export class InputComponent implements OnInit {
       };
       this.productEntries.push(productRequisition);
     }
-    this.requisitionForm.controls.product.setValue('');
-    this.requisitionForm.controls.quantity.setValue(0);
-    this.requisitionForm.controls.price.setValue(0);
-    this.requisitionForm.controls.dueDate.setValue('');
+    this.clearForm();
   }
 
   public continue(): void {
@@ -150,6 +160,34 @@ export class InputComponent implements OnInit {
       return;
     }
     this.showProducts = true;
+  }
+
+  public async onSubmit(): Promise<void> {
+    const fileName = this.fileNameHelper.getFileName(Upload.invoice, this.invoice);
+    const realName = this.fileNameHelper.getRealFileName(fileName);
+    const invoiceUrl = this.fileUrl + 'invoices/' + realName;
+    const fileUploaded = await this.uploaderService.uploadFile(this.invoice, fileName);
+
+    const entry: ICreateEntry = {
+      invoiceUrl,
+      date: this.entryForm.controls.date.value,
+      supplierId: this.selectedSupplier.id
+    };
+
+    fileUploaded ? this.openModal(entry) : '' ;
+  }
+
+  private openModal(entry: ICreateEntry): void {
+    this.dialog.open(ConfirmInputComponent, {
+      panelClass: 'dialog-style',
+      data: { entry, entryData: this.productEntries }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.productEntries = [];
+        this.showProducts = false;
+        this.clearForm();
+      }
+    });
   }
 
   private async getProductList(): Promise<void> {
@@ -181,5 +219,12 @@ export class InputComponent implements OnInit {
       this.supplierControl.patchValue(this.selectedSupplier.name);
       this.showProducts = true;
     });
+  }
+
+  private clearForm(): void {
+    this.requisitionForm.controls.product.setValue('');
+    this.requisitionForm.controls.quantity.setValue(0);
+    this.requisitionForm.controls.price.setValue(0);
+    this.requisitionForm.controls.dueDate.setValue('');
   }
 }
