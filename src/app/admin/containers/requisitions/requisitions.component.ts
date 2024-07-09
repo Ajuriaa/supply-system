@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { IRequisition } from '../../interfaces';
 import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
-import { CancelRequisitionComponent } from '../../components';
+import { CancelRequisitionComponent, FinishRequisitionComponent } from '../../components';
 
 const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'document', 'actions'];
 
@@ -93,8 +93,23 @@ export class RequisitionComponent implements OnInit {
     });
   }
 
+  public openFinishRequisitionModal(requisition: IRequisition): void {
+    this.dialog.open(FinishRequisitionComponent, {
+      panelClass: 'dialog-style',
+      data: requisition
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllRequisitions();
+      }
+    });
+  }
+
   public canCancel(state: string): boolean {
     return state === 'Pendiente por admin';
+  }
+
+  public canFinish(state: string): boolean {
+    return state === 'Activa';
   }
 
   public canEdit(state: string): boolean {

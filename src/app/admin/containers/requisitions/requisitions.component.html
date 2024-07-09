@@ -85,6 +85,7 @@
         <td mat-cell *matCellDef="let element" class="table-cell icons">
           <i class="uil uil-edit"  *ngIf="canEdit(element.state.state)"></i>
           <i class="uil uil-trash-alt" *ngIf="canCancel(element.state.state)" (click)="openCancelRequisitionModal(element)"></i>
+          <i class="uil uil-check-circle" *ngIf="canFinish(element.state.state)" (click)="openFinishRequisitionModal(element)"></i>
         </td>
       </ng-container>
 

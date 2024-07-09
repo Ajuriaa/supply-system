@@ -31,4 +31,24 @@ export class RequisitionMutations {
       );
     });
   }
+
+  public finishRequisiton(id: number): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/finish-requisition`, { id }).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Requisición finalizada correctamente', 'Listo!');
+            resolve(response);
+          } else {
+            this.toaster.success('Ocurrió un error', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
 }
