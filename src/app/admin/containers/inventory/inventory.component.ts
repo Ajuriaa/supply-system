@@ -118,6 +118,13 @@ export class InventoryComponent implements OnInit {
     });
   }
 
+  public hasWarning(product: IProduct): boolean {
+    const amount = product.batches.length > 0 ? product.batches.reduce((acc, batch) => acc + batch.quantity, 0) : 0;
+    const now = moment.utc();
+    const date = moment.utc(product.batches[0].due);
+    return amount < product.minimum || date.diff(now, 'days') < 30 || date.isBefore(now);
+  }
+
   private getAllProducts(): void {
     this.productQuery.getAllProducts().subscribe(({ data }) => {
       this.products = data;
@@ -128,13 +135,17 @@ export class InventoryComponent implements OnInit {
   }
 
   private getClosestDueDate(): void {
+    const now = new Date().getTime();
+
     const dueDates = this.products.map(product => {
       const due = product.batches.length > 0 ? product.batches[0].due : moment().endOf('year').toDate();
       const dueDate = new Date(due).getTime();
       return { product, dueDate };
-    });
+    }).filter(item => item.dueDate > now);
 
-    const closestDueDate = dueDates.sort((a, b) => a.dueDate - b.dueDate)[0];
-    this.dueProduct = closestDueDate.product;
+    if (dueDates.length > 0) {
+      const closestDueDate = dueDates.sort((a, b) => a.dueDate - b.dueDate)[0];
+      this.dueProduct = closestDueDate.product;
+    }
   }
 }

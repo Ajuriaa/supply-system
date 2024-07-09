@@ -38,49 +38,49 @@
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Producto</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" [ngClass]="hasWarning(element) ? 'warning' : ''">
           {{ element.name }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="group">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Categoría</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" [ngClass]="hasWarning(element) ? 'warning' : ''">
           {{ element.group.name }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Cantidad</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" [ngClass]="hasWarning(element) ? 'warning' : ''">
           {{ getAmount(element) }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="unit">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Unidad</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" [ngClass]="hasWarning(element) ? 'warning' : ''">
           {{ element.unit }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="closestDueDate">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Fecha de Vencimiento</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" [ngClass]="hasWarning(element) ? 'warning' : ''">
           {{ getDueDate(element) }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="price">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Precio</th>
-        <td mat-cell *matCellDef="let element" class="table-cell pointer">
+        <td mat-cell *matCellDef="let element" class="table-cell pointer" [ngClass]="hasWarning(element) ? 'warning' : ''">
           {{ getPrice(element) }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Acciones</th>
-        <td mat-cell *matCellDef="let element" class="table-cell icons">
+        <td mat-cell *matCellDef="let element" class="table-cell icons" [ngClass]="hasWarning(element) ? 'warning' : ''">
           <i class="uil uil-plus-circle" (click)="goToInput()"></i>
           <i class="uil uil-edit" (click)="openCreateUpdateProductModal('edit', element)"></i>
           <i class="uil uil-minus-circle" *ngIf="getAmount(element) > 0" (click)="openRemoveProductsModal(element)"></i>
