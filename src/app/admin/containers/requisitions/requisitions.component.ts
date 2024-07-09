@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { IRequisition } from '../../interfaces';
 import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
-import { CancelRequisitionComponent, FinishRequisitionComponent } from '../../components';
+import { CancelRequisitionComponent, EditWatchRequisitionComponent, FinishRequisitionComponent } from '../../components';
 
 const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'document', 'actions'];
 
@@ -104,6 +104,17 @@ export class RequisitionComponent implements OnInit {
     });
   }
 
+  public openEditRequisitionModal(requisition: IRequisition, type = 'edit'): void {
+    this.dialog.open(EditWatchRequisitionComponent, {
+      panelClass: 'dialog-style',
+      data: {requisition, type}
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllRequisitions();
+      }
+    });
+  }
+
   public canCancel(state: string): boolean {
     return state === 'Pendiente por admin';
   }
@@ -113,7 +124,11 @@ export class RequisitionComponent implements OnInit {
   }
 
   public canEdit(state: string): boolean {
-    return state === 'Pendiente por admin' || state === 'Pendiente por jefe';
+    return state === 'Pendiente por admin';
+  }
+
+  public canWatch(state: string): boolean {
+    return state !== 'Pendiente por admin';
   }
 
   public onFilterChange(filter: string): void {
