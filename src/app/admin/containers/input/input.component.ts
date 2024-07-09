@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { EMPTY_PRODUCT, EMPTY_SUPPLIER } from 'src/app/core/helpers';
@@ -51,9 +51,8 @@ export interface ICreateEntry {
   styleUrl: './input.component.scss'
 })
 export class InputComponent implements OnInit {
-  public loading = false;
+  public loading = true;
   public error = false;
-  public supplierControl = new FormControl('');
   public products: IProduct[] = [];
   public suppliers: ISupplier[] = [];
   public showProducts = false;
@@ -216,8 +215,8 @@ export class InputComponent implements OnInit {
         return;
       }
       this.selectedSupplier = this.suppliers.find((supplier) => supplier.id === supplierId) || EMPTY_SUPPLIER;
-      this.supplierControl.patchValue(this.selectedSupplier.name);
-      this.showProducts = true;
+      this.entryForm.controls.supplier.patchValue(this.selectedSupplier.name);
+      this.loading = false;
     });
   }
 
