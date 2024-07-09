@@ -9,7 +9,7 @@ export interface IRequisition {
   bossName: string;
   systemDate: Date;
   state: IState;
-  productRequisition: IProductRequisition[];
+  productsRequisition: IProductRequisition[];
 }
 
 export interface IState {

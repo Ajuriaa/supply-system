@@ -2,7 +2,10 @@
 
 <div class="container" *ngIf="!loading">
   <p class="title">Finalizar Requisición</p>
-  <p class="text">Seguro que quieres finalizar la requisición de {{ data.employeeName }}? <strong>Esta acción no es reversible</strong></p>
+  <div>
+    <p class="text">Está seguro de finalizar la requisición?</p>
+    <p class="text">Al finalizar la requisición, los productos se restarán del inventario. <strong>Esta acción no es reversible</strong></p>
+  </div>
   <div class="buttons">
     <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>
     <app-primary-button class="btn" (btnClick)="onSubmit()">Confirmar</app-primary-button>
