@@ -12,7 +12,7 @@ import moment from 'moment';
 import { HistoryQueries } from '../../services';
 import { IHistory, IMergedHistory } from '../../interfaces';
 
-const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'document'];
+const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'price', 'document'];
 
 @Component({
   selector: 'app-history',
@@ -98,7 +98,8 @@ export class HistoryComponent implements OnInit {
           type: 'Entrada',
           quantity: productEntry.quantity,
           finalQuantity: productEntry.currentQuantity,
-          document: entry?.invoiceUrl || ''
+          document: entry?.invoiceUrl || '',
+          price: productEntry.price
         });
       });
     });
@@ -112,7 +113,8 @@ export class HistoryComponent implements OnInit {
         type: "Salida",
         quantity: output.quantity,
         finalQuantity: output.currentQuantity,
-        document: output.requisition?.documentUrl || ''
+        document: output.requisition?.documentUrl || '',
+        price: output.price
       });
     });
 

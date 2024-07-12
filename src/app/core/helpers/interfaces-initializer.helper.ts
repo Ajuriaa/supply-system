@@ -34,7 +34,8 @@ export const EMPTY_MERGED_HISTORY: IMergedHistory = {
   type: "",
   quantity: 0,
   finalQuantity: 0,
-  document: ""
+  document: "",
+  price: 0
 };
 
 export const EMPTY_SUPPLIER: ISupplier = {

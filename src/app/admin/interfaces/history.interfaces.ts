@@ -7,6 +7,7 @@ export interface IOutput {
   quantity: number;
   currentQuantity: number;
   date: Date;
+  price: number;
   requisition?: IRequisition;
   motive: string;
 }
@@ -23,6 +24,7 @@ export interface IMergedHistory {
   initialQuantity: number;
   type: string;
   quantity: number;
+  price: number;
   finalQuantity: number;
   document: string
 }
