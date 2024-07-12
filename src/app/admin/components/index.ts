@@ -6,3 +6,4 @@ export * from './confirm-input/confirm-input.component';
 export * from './remove-products/remove-products.component';
 export * from './finish-requisition/finish-requisition.component';
 export * from './edit-watch-requisition/edit-watch-requisition.component';
+export * from './upload-requisition/upload-requisition.component';

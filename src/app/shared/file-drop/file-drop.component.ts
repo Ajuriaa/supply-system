@@ -9,7 +9,7 @@ import { FileUploadControl, FileUploadModule, FileUploadValidators } from '@ipla
   styleUrl: './file-drop.component.scss'
 })
 export class FileDropComponent {
-  @Input() public allowedExtensions = 'images/*';
+  @Input() public allowedExtensions = 'images/*|.pdf';
   @Input() public multiple = false;
   @Output() selectedFiles: EventEmitter<File[]> = new EventEmitter<File[]>();
   public filesControl = new FileUploadControl(undefined, FileUploadValidators.filesLimit(2));

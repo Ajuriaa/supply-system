@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { IRequisition } from '../../interfaces';
 import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
-import { CancelRequisitionComponent, EditWatchRequisitionComponent, FinishRequisitionComponent } from '../../components';
+import { CancelRequisitionComponent, EditWatchRequisitionComponent, FinishRequisitionComponent, UploadRequisitionComponent } from '../../components';
 
 const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'document', 'actions'];
 
@@ -86,6 +86,17 @@ export class RequisitionComponent implements OnInit {
     this.dialog.open(CancelRequisitionComponent, {
       panelClass: 'dialog-style',
       data: requisition
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getAllRequisitions();
+      }
+    });
+  }
+
+  public openUploadDocumentModal(id: number): void {
+    this.dialog.open(UploadRequisitionComponent, {
+      panelClass: 'dialog-style',
+      data: id
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getAllRequisitions();

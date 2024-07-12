@@ -33,6 +33,26 @@ export class RequisitionMutations {
     });
   }
 
+  public updateDocument(id: number, file: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this.http.post<boolean>(`${environment.apiUrl}/upload-requisition-file`, { id, file }).subscribe(
+        (response: boolean) => {
+          if (response) {
+            this.toaster.success('Documento de Requisición actualizado correctamente', 'Listo!');
+            resolve(response);
+          } else {
+            this.toaster.success('Ocurrió un error', 'Error!');
+            resolve(response);
+          }
+        },
+        (error) => {
+          this.toaster.error(error.message, 'Error!');
+          reject(error);
+        }
+      );
+    });
+  }
+
   public finishRequisiton(id: number): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       this.http.post<boolean>(`${environment.apiUrl}/finish-requisition`, { id }).subscribe(
