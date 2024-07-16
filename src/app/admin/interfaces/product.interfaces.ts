@@ -16,7 +16,7 @@ export interface IGroup {
 
 export interface IBatch {
   id: number;
-  due: Date;
+  due?: Date;
   quantity: number;
   price: number;
 }

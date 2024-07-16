@@ -6,7 +6,7 @@
     <div class="batch">
       <mat-radio-button [value]="batch" (click)="selectBatch(batch)">Lote {{ batch.id }}</mat-radio-button>
       <p class="batch-label">Cantidad: {{ batch.quantity }}</p>
-      <p class="batch-label">Fecha de vencimiento: {{ getDate(batch.due) }}</p>
+      <p class="batch-label">Fecha de vencimiento: {{ getDate(batch) }}</p>
     </div>
   }
   <form [formGroup]="form" class="input-wrapper">

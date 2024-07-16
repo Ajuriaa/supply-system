@@ -132,7 +132,7 @@ export class PDFHelper {
         product.group.name,
         product.batches?.reduce((acc, batch) => acc + batch.quantity, 0),
         product.unit,
-        product.batches.length > 0 ? this.getDate(product.batches[0].due) : 'No Registrado',
+        product.batches.length > 0 && product.batches[0].due ? this.getDate(product.batches[0].due) : 'No Registrado',
         product.batches.length > 0 ? product.batches[0].price : 'No Registrado'
       ];
     });

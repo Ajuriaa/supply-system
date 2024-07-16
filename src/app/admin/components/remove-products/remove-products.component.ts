@@ -85,8 +85,8 @@ export class RemoveProductsComponent implements OnInit {
     }
   }
 
-  public getDate(date: Date): string {
-    return moment.utc(date).format('DD/MM/YYYY');
+  public getDate(batch: IBatch): string {
+    return batch.due ? moment.utc(batch.due).format('DD/MM/YYYY') : 'No Registrado';
   }
 
   public selectBatch(batch: IBatch): void {

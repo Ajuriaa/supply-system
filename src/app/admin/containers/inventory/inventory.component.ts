@@ -56,7 +56,7 @@ export class InventoryComponent implements OnInit {
   }
 
   public getDueDate(product: IProduct): string {
-    const date = product.batches.length > 0 ? moment(product.batches[0].due).format('DD/MM/YYYY') : 'Sin Unidades';
+    const date = product.batches.length > 0 && product.batches[0].due ? moment.utc(product.batches[0].due).format('DD/MM/YYYY') : 'N/A';
     return date;
   }
 
@@ -139,7 +139,7 @@ export class InventoryComponent implements OnInit {
 
     const dueDates = this.products.map(product => {
       const due = product.batches.length > 0 ? product.batches[0].due : moment().endOf('year').toDate();
-      const dueDate = new Date(due).getTime();
+      const dueDate = new Date(due ? 'due' : moment().endOf('year').toDate()).getTime();
       return { product, dueDate };
     }).filter(item => item.dueDate > now);
 
