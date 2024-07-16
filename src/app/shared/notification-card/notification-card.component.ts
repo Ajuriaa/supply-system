@@ -18,7 +18,7 @@ export class NotificationCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.date = this.product.batches.length > 0 ? moment.utc(this.product.batches[0].due).format('DD/MM/YYYY') : "Sin Unidades";
-    this.daysLeft = this.product.batches.length > 0 ? moment.utc(this.product.batches[0].due).diff(moment(), 'days') + 1 : 0;
+    this.daysLeft = this.product.batches.length > 0 ? moment.utc(this.product.batches[0].due).diff(moment.utc(), 'days') + 1 : 0;
     this.stock = this.product.batches.reduce((acc, batch) => acc + batch.quantity, 0);
   }
 }

@@ -14,7 +14,7 @@ export class PDFHelper {
   public generatePDF(formattedData: any[], columns: string[], title: string, dates = false, start?: Date, end?: Date): void {
     this.isFirstPageDrawn = false;
     let subtitle = '';
-    dates ? subtitle += `${moment(start).format('DD/MM/YYYY')} - ${moment(end).format('DD/MM/YYYY')}` : '';
+    dates ? subtitle += `${moment.utc(start).format('DD/MM/YYYY')} - ${moment.utc(end).format('DD/MM/YYYY')}` : '';
     const doc = new jsPDF('landscape');
     doc.setTextColor(40);
     const blue = '#88CFE0';
@@ -55,7 +55,7 @@ export class PDFHelper {
       doc.setPage(i);
       doc.setFontSize(10);
       doc.text('Página ' + i + ' de ' + pageCount, doc.internal.pageSize.width - 35, footerHeight);
-      doc.text('Lista generada el ' + moment().format('DD/MM/YYYY'), 25, footerHeight);
+      doc.text('Lista generada el ' + moment.utc().format('DD/MM/YYYY'), 25, footerHeight);
     }
 
     doc.output('dataurlnewwindow');
@@ -139,7 +139,7 @@ export class PDFHelper {
   }
 
   private getDate(date: Date): string {
-    return moment(date).format('DD/MM/YYYY');
+    return moment.utc(date).format('DD/MM/YYYY');
   }
 }
 

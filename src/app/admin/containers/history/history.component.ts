@@ -74,7 +74,7 @@ export class HistoryComponent implements OnInit {
       this.filteredHistory = this.mergedHistory.filter(
         (history) => {
           const date = moment.utc(history.date);
-          return moment(date).isBetween(dates.startDate, dates.endDate, null, '[]');
+          return moment.utc(date).isBetween(dates.startDate, dates.endDate, null, '[]');
         }
       );
     } else {
@@ -84,9 +84,9 @@ export class HistoryComponent implements OnInit {
   }
 
   private mergeHistory(): void {
-    const month = moment().month();
-    this.monthInput = this.history.entries.filter(entry => moment(entry.date).month() === month).length;
-    this.monthOutput = this.history.outputs.filter(output => moment(output.date).month() === month).length;
+    const month = moment.utc().month();
+    this.monthInput = this.history.entries.filter(entry => moment.utc(entry.date).month() === month).length;
+    this.monthOutput = this.history.outputs.filter(output => moment.utc(output.date).month() === month).length;
 
     this.history.entries.forEach((entry) => {
       entry.productsEntry.forEach(productEntry => {
@@ -118,9 +118,9 @@ export class HistoryComponent implements OnInit {
       });
     });
 
-    this.mergedHistory.sort((a: any, b: any) => moment(b.date).diff(moment(a.date)));
+    this.mergedHistory.sort((a: any, b: any) => moment.utc(b.date).diff(moment.utc(a.date)));
 
-    this.filteredHistory = this.mergedHistory.filter(history => moment(history.date).month() === month);
+    this.filteredHistory = this.mergedHistory.filter(history => moment.utc(history.date).month() === month);
     this.loading = false;
   }
 }

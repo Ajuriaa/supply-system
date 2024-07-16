@@ -97,11 +97,11 @@ export class SuppliersComponent implements OnInit {
       this.filteredSuppliers = data;
       this.loading = false;
       this.monthlyDeliveries = this.suppliers.reduce((acc, supplier) => {
-        const startOfMonth = moment().startOf('month');
-        const now = moment();
+        const startOfMonth = moment.utc().startOf('month');
+        const now = moment.utc();
 
         const filteredEntries = supplier.entries.filter(entry => {
-          const entryDate = moment(entry.date);
+          const entryDate = moment.utc(entry.date);
           return entryDate.isBetween(startOfMonth, now, null, '[]');
         });
 

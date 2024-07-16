@@ -138,8 +138,8 @@ export class InventoryComponent implements OnInit {
     const now = new Date().getTime();
 
     const dueDates = this.products.map(product => {
-      const due = product.batches.length > 0 ? product.batches[0].due : moment().endOf('year').toDate();
-      const dueDate = new Date(due ? 'due' : moment().endOf('year').toDate()).getTime();
+      const due = product.batches.length > 0 ? product.batches[0].due : moment.utc().endOf('year').toDate();
+      const dueDate = new Date(due ? 'due' : moment.utc().endOf('year').toDate()).getTime();
       return { product, dueDate };
     }).filter(item => item.dueDate > now);
 

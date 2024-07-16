@@ -67,7 +67,7 @@ export class RequisitionComponent implements OnInit {
   }
 
   public getDate(date: Date): string {
-    return moment(date).format('DD/MM/YYYY');
+    return moment.utc(date).format('DD/MM/YYYY');
   }
 
   public generatePDF(): void {
@@ -157,7 +157,7 @@ export class RequisitionComponent implements OnInit {
       this.filteredRequisitions = this.requisitions.filter(
         (requisition) => {
           const requestDate = moment.utc(requisition.systemDate);
-          return moment(requestDate).isBetween(dates.startDate, dates.endDate, null, '[]');
+          return moment.utc(requestDate).isBetween(dates.startDate, dates.endDate, null, '[]');
         }
       );
     } else {
@@ -168,10 +168,10 @@ export class RequisitionComponent implements OnInit {
 
   private getAllRequisitions(): void {
     this.requisitionQuery.getAllProducts().subscribe((response) => {
-      const currentMonth = moment().month();
+      const currentMonth = moment.utc().month();
       this.requisitions = response.data;
       this.filteredRequisitions = this.requisitions.filter((requisition) => {
-        return moment(requisition.systemDate).month() === currentMonth;
+        return moment.utc(requisition.systemDate).month() === currentMonth;
       });
       this.getMonthlyRequisitions();
       this.pending = this.requisitions.filter((requisition) => requisition.state.state === 'Pendiente por admin').length;
@@ -180,9 +180,9 @@ export class RequisitionComponent implements OnInit {
   }
 
   private getMonthlyRequisitions(): void {
-    const currentMonth = moment().month();
+    const currentMonth = moment.utc().month();
     this.monthlyRequisitions = this.requisitions.filter((requisition) => {
-      return moment(requisition.systemDate).month() === currentMonth;
+      return moment.utc(requisition.systemDate).month() === currentMonth;
     }).length;
   }
 }
