@@ -135,16 +135,15 @@ export class InventoryComponent implements OnInit {
   }
 
   private getClosestDueDate(): void {
-    const now = new Date().getTime();
+    const now = moment.utc();
 
-    const dueDates = this.products.map(product => {
-      const due = product.batches.length > 0 ? product.batches[0].due : moment.utc().endOf('year').toDate();
-      const dueDate = new Date(due ? 'due' : moment.utc().endOf('year').toDate()).getTime();
-      return { product, dueDate };
-    }).filter(item => item.dueDate > now);
+    const dueDates = this.filteredProducts.map(product => {
+      const due = product.batches.length > 0 && product.batches[0].due ? moment.utc(product.batches[0].due) : moment().utc().endOf('year');
+      return { product, due };
+    }).filter(item => item.due.isSameOrAfter(now, 'D'));
 
     if (dueDates.length > 0) {
-      const closestDueDate = dueDates.sort((a, b) => a.dueDate - b.dueDate)[0];
+      const closestDueDate = dueDates.sort((a, b) => a.due.valueOf() - b.due.valueOf())[0];
       this.dueProduct = closestDueDate.product;
     }
   }
