@@ -15,6 +15,8 @@ export const EMPTY_BATCH: IBatch = {
 export const EMPTY_PRODUCT: IProduct = {
   id: 0,
   minimum: 0,
+  perishable: false,
+  batched: false,
   name: "",
   unit: "",
   batches: [],

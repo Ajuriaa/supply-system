@@ -4,6 +4,8 @@ export interface IProduct {
   minimum: number;
   unit: string;
   imageUrl?: string;
+  perishable: boolean;
+  batched: boolean;
   batches: IBatch[];
   group: IGroup;
 }
