@@ -25,7 +25,7 @@
   </section>
   <section class="table-container">
     <app-no-result *ngIf="filteredHistory.length === 0"></app-no-result>
-    <table mat-table [dataSource]="filteredHistory | paginate: { itemsPerPage: 8, currentPage: page }" class="table" *ngIf="filteredHistory.length > 0">
+    <table mat-table [dataSource]="filteredHistory | paginate: { itemsPerPage: 7, currentPage: page }" class="table" *ngIf="filteredHistory.length > 0">
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Fecha</th>

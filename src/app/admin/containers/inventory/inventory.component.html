@@ -34,7 +34,7 @@
   </section>
   <section class="table-container">
     <app-no-result *ngIf="filteredProducts.length === 0"></app-no-result>
-    <table mat-table [dataSource]="filteredProducts | paginate: { itemsPerPage: 8, currentPage: page }" class="table" *ngIf="filteredProducts.length > 0">
+    <table mat-table [dataSource]="filteredProducts | paginate: { itemsPerPage: 7, currentPage: page }" class="table" *ngIf="filteredProducts.length > 0">
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Producto</th>

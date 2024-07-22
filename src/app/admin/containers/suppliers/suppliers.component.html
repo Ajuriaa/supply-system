@@ -24,7 +24,7 @@
   </section>
   <section class="table-container">
     <app-no-result *ngIf="filteredSuppliers.length === 0"></app-no-result>
-    <table mat-table [dataSource]="filteredSuppliers | paginate: { itemsPerPage: 8, currentPage: page }" class="table" *ngIf="filteredSuppliers.length > 0">
+    <table mat-table [dataSource]="filteredSuppliers | paginate: { itemsPerPage: 7, currentPage: page }" class="table" *ngIf="filteredSuppliers.length > 0">
 
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef class="table-cell title">Proveedor</th>
