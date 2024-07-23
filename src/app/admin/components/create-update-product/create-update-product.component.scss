@@ -48,8 +48,21 @@
 
 .flex-center {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
   width: 100%;
+}
+
+.add {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  font-size: 3rem;
+
+  .label {
+    font-size: 2rem;
+  }
 }

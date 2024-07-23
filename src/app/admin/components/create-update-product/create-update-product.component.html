@@ -49,7 +49,11 @@
         >
       </mat-form-field>
     </div>
-    <div class="flex-center">
+    <div class="flex-center" *ngIf="isCreate">
+      <div class="add" (click)="openGroupModal()">
+        <i class="uil uil-plus-circle"></i>
+        <p class="label">Agregar Grupo</p>
+      </div>
       <mat-checkbox class="input" formControlName="perishable">Perecedero</mat-checkbox>
       <mat-checkbox class="input" formControlName="batched" [disabled]="isPerishable()">Lotificado?</mat-checkbox>
     </div>

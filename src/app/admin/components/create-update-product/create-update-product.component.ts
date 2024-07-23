@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FileDropComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environments';
 import { FileNameHelper } from '../../helpers';
 import { ProductMutations, ProductQueries, UploaderService } from '../../services';
 import { IGroup, IProduct } from '../../interfaces';
+import { CreateGroupComponent } from '../create-group/create-group.component';
 
 @Component({
   selector: 'app-create-update-product',
@@ -43,6 +44,7 @@ export class CreateUpdateProductComponent implements OnInit {
     private productQuery: ProductQueries,
     private dialogRef: MatDialogRef<CreateUpdateProductComponent>,
     private fileNameHelper: FileNameHelper,
+    private dialog: MatDialog,
     private uploaderService: UploaderService,
     @Inject(MAT_DIALOG_DATA) public data: { product: IProduct, modalType: string }
   ){}
@@ -120,6 +122,18 @@ export class CreateUpdateProductComponent implements OnInit {
     this.selectedFile = files[0];
   }
 
+  public openGroupModal(): void {
+    this.dialog.open(CreateGroupComponent, {
+      panelClass: 'dialog-style',
+      data: this.groups
+    }).afterClosed().subscribe((response) => {
+      if(response) {
+        this.loading = true;
+        this.getGroups();
+      }
+    });
+  }
+
   private fillForm(): void {
     if(this.isCreate) {
       this.loading = false;
@@ -132,12 +146,12 @@ export class CreateUpdateProductComponent implements OnInit {
       unit: this.data.product.unit,
       group: this.data.product.group.name
     });
-    this.loading = false;
   }
 
   private async getGroups(): Promise<void> {
     this.productQuery.getGroups().subscribe(({ data }) => {
       this.groups = data;
+      this.loading = false;
     });
   }
 }
