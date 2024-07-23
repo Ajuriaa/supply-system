@@ -62,7 +62,7 @@ export class InputComponent implements OnInit {
   public requisitionForm!: FormGroup;
   public displayedColumns: string[] = TABLE_COLUMNS;
   public selectedProduct: IProduct = EMPTY_PRODUCT;
-  public productEntries: any[] = [];
+  public productEntries: IEntryData[] = [];
   public invoice!: File;
   public noInvoice = false;
   public fileUrl = environment.filesUrl;
@@ -88,7 +88,8 @@ export class InputComponent implements OnInit {
       product: ['', [Validators.required]],
       quantity: [0, [Validators.required, Validators.min(1)]],
       price: [0, [Validators.required, Validators.min(0.01)]],
-      dueDate: ['', [Validators.required]]
+      dueDate: [''],
+      batchedNumbers: ['']
     });
     this.filteredProducts = this.requisitionForm.controls.product.valueChanges.pipe(
       startWith(''),
@@ -113,6 +114,18 @@ export class InputComponent implements OnInit {
 
   public selectProduct(product: IProduct): void {
     this.selectedProduct = product;
+    this.isPerishable(this.selectedProduct.perishable);
+  }
+
+  public isPerishable(perishable: boolean): void {
+    if(perishable) {
+      this.requisitionForm.controls.dueDate.setValidators([Validators.required])
+      this.requisitionForm.controls.dueDate.enable();
+    } else {
+      this.requisitionForm.controls.dueDate.clearValidators();
+      this.requisitionForm.controls.dueDate.setValue('');
+      this.requisitionForm.controls.dueDate.disable();
+    }
   }
 
   public selectSupplier(supplier: ISupplier): void {
@@ -123,8 +136,9 @@ export class InputComponent implements OnInit {
     this.invoice = files[0];
   }
 
-  public getDate(date: Date): string {
-    return moment.utc(date).format('DD/MM/YYYY');
+  public getDate(input: IEntryData): string {
+    const date  = input.product.perishable && input.product.batches.length > 0 ? moment.utc(input.dueDate).format('DD/MM/YYYY'): 'N/A';
+    return date;
   }
 
   public addProduct(): void {
