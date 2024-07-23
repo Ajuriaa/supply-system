@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FileDropComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Upload } from 'src/app/core/enums';
@@ -18,7 +20,8 @@ import { IGroup, IProduct } from '../../interfaces';
   imports: [
     LoadingComponent, CommonModule, PrimaryButtonComponent,
     FileDropComponent, MatFormFieldModule, FormsModule,
-    ReactiveFormsModule, MatInputModule, MatSelectModule
+    ReactiveFormsModule, MatInputModule, MatSelectModule,
+    MatSlideToggleModule, MatCheckboxModule
   ],
   providers: [ProductMutations, ProductQueries, FileNameHelper, UploaderService],
   templateUrl: './create-update-product.component.html',
@@ -50,7 +53,9 @@ export class CreateUpdateProductComponent implements OnInit {
       name: ['', [Validators.required]],
       minimum: [1, [Validators.required]],
       unit: ['', [Validators.required]],
-      group: ['', [Validators.required]]
+      group: ['', [Validators.required]],
+      perishable: [false],
+      batched: [false]
     });
 
     this.getGroups();
@@ -59,6 +64,10 @@ export class CreateUpdateProductComponent implements OnInit {
 
   public onCancel(changesMade = false): void {
     this.dialogRef.close(changesMade);
+  }
+
+  public isPerishable(): boolean {
+    return this.productForm.value.perishable;
   }
 
   public async onSubmit(): Promise<void> {
@@ -89,6 +98,8 @@ export class CreateUpdateProductComponent implements OnInit {
       name: this.productForm.value.name,
       minimum: this.productForm.value.minimum,
       unit: this.productForm.value.unit,
+      perishable: this.productForm.value.perishable,
+      batched: this.productForm.value.perishable ? false : this.productForm.value.batched,
       groupId: this.groups.find((group) => group.name === this.productForm.value.group)?.id || this.groups[0].id,
       imageUrl: file
     };

@@ -121,7 +121,8 @@ export class InventoryComponent implements OnInit {
   public hasWarning(product: IProduct): boolean {
     const amount = product.batches.length > 0 ? product.batches.reduce((acc, batch) => acc + batch.quantity, 0) : 0;
     const now = moment.utc();
-    const date = moment.utc(product.batches[0].due);
+    const due = product.batches.length > 0 && product.batches[0].due ? moment.utc(product.batches[0].due) : moment().utc().endOf('year');
+    const date = moment.utc(due);
     return amount < product.minimum || date.diff(now, 'days') < 30 || date.isBefore(now);
   }
 
