@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import moment from 'moment';
 import { IProduct } from 'src/app/admin/interfaces';
@@ -6,7 +7,7 @@ import { EMPTY_PRODUCT } from 'src/app/core/helpers';
 @Component({
   selector: 'app-notification-card',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './notification-card.component.html',
   styleUrl: './notification-card.component.scss'
 })
