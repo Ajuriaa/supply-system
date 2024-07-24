@@ -119,7 +119,7 @@ export class InputComponent implements OnInit {
 
   public isPerishable(perishable: boolean): void {
     if(perishable) {
-      this.requisitionForm.controls.dueDate.setValidators([Validators.required])
+      this.requisitionForm.controls.dueDate.setValidators([Validators.required]);
       this.requisitionForm.controls.dueDate.enable();
     } else {
       this.requisitionForm.controls.dueDate.clearValidators();

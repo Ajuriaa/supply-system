@@ -137,8 +137,9 @@ export class InventoryComponent implements OnInit {
 
   private getClosestDueDate(): void {
     const now = moment.utc();
+    const perishableProducts = this.filteredProducts.filter(product => product.batches.length > 0 && product.batches[0].due && product.perishable);
 
-    const dueDates = this.filteredProducts.map(product => {
+    const dueDates = perishableProducts.map(product => {
       const due = product.batches.length > 0 && product.batches[0].due ? moment.utc(product.batches[0].due) : moment().utc().endOf('year');
       return { product, due };
     }).filter(item => item.due.isSameOrAfter(now, 'D'));
