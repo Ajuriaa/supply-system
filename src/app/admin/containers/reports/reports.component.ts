@@ -10,8 +10,8 @@ import moment from 'moment';
 import { ReportQueries } from '../../services';
 
 const OPTIONS = [
-    { value: 'departments', label: 'Salidas por Departamento', columns: ['Departamento', 'Requisiciones','Cantidad'] },
-    { value: 'products', label: 'Salidas por Producto', columns: ['Producto', 'Cantidad'] },
+    { value: 'departments', label: 'Salidas por Departamento', columns: ['Departamento', 'Requisiciones','Costo (L.)'] },
+    { value: 'products', label: 'Salidas por Producto', columns: ['Producto', 'Unidad', 'Cantidad', 'Costo (L.)'] },
     { value: 'daily', label: 'Salidas Diarias', columns: ['Producto', 'Cantidad'] },
     { value: 'groups', label: 'Salidas por Grupo', columns: ['Producto', 'Cantidad'] },
     { value: 'entries', label: 'Entradas por Producto', columns: ['Producto', 'Cantidad'] },
