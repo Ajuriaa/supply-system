@@ -12,7 +12,7 @@ import { ReportQueries } from '../../services';
 const OPTIONS = [
     { value: 'departments', label: 'Salidas por Departamento', columns: ['Departamento', 'Requisiciones','Costo (L.)'] },
     { value: 'products', label: 'Salidas por Producto', columns: ['Producto', 'Unidad', 'Cantidad', 'Costo (L.)'] },
-    { value: 'daily', label: 'Salidas Diarias', columns: ['Producto', 'Cantidad'] },
+    { value: 'daily', label: 'Salidas Diarias', columns: ['Fecha', 'Día', 'Costo (L.)'] },
     { value: 'groups', label: 'Salidas por Grupo', columns: ['Producto', 'Cantidad'] },
     { value: 'entries', label: 'Entradas por Producto', columns: ['Producto', 'Cantidad'] },
     { value: 'providers', label: 'Entradas por Proveedor', columns: ['Producto', 'Cantidad'] },
@@ -50,10 +50,12 @@ export class ReportsComponent {
       this.error = true;
       return;
     }
+
+    const withDate = !['stock', 'daily'].includes(this.selectedReport.value);
     // Generate report
     this.loading = true;
     this.reportQuery.getReport(this.selectedReport.value, this.start, this.end).subscribe(({ data }) => {
-      this.pdfHelper.generatePDF(this.generateData(data.info), this.selectedReport.columns, this.selectedReport.label, true, this.startDate, this.endDate, true, data.total);
+      this.pdfHelper.generatePDF(this.generateData(data.info), this.selectedReport.columns, this.selectedReport.label, withDate, this.startDate, this.endDate, true, data.total);
       this.loading = false;}
     );
   }
