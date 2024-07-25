@@ -55,8 +55,9 @@ export class ReportsComponent {
     this.loading = true;
     this.reportQuery.getReport(this.selectedReport.value, this.start, this.end).subscribe(({ data }) => {
       this.pdfHelper.generatePDF(this.generateData(data.info), this.selectedReport.columns, this.selectedReport.label, withDate, this.startDate, this.endDate, true, data.total);
-      this.loading = false;}
-    );
+      this.loading = false;
+      this.selectedReport = { value: '', label: '', columns: [''] };
+    });
   }
 
   public selectReport(report: { value: string, label: string, columns: string[] }): void {
