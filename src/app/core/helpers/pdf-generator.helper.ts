@@ -11,7 +11,7 @@ export class PDFHelper {
   private isFirstPageDrawn = false;
   constructor() {}
 
-  public generatePDF(formattedData: any[], columns: string[], title: string, dates = false, start?: Date, end?: Date): void {
+  public generatePDF(formattedData: any[], columns: string[], title: string, dates = false, start?: Date, end?: Date, isReport = false, total = 0): void {
     this.isFirstPageDrawn = false;
     let subtitle = '';
     dates ? subtitle += `${moment.utc(start).format('DD/MM/YYYY')} - ${moment.utc(end).format('DD/MM/YYYY')}` : '';

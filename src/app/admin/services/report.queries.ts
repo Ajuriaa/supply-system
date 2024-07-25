@@ -2,15 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environments';
-import { IHistory } from '../interfaces';
 
+export interface IReport {
+  data: {
+    info: any[];
+    total: number;
+  }
+}
 @Injectable({
   providedIn: 'root'
 })
 export class ReportQueries {
   constructor(private http: HttpClient) {}
 
-  // public getHistory(): Observable<IHistory> {
-  //   return this.http.get<IHistory>(`${environment.apiUrl}/history`);
-  // }
+  public getReport(type: string, start: string, end: string): Observable<IReport> {
+    return this.http.get<IReport>(`${environment.apiUrl}/report/${type}/${start}/${end}`);
+  }
 }

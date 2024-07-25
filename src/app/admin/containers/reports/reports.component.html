@@ -3,9 +3,9 @@
 <div class="container" *ngIf="!loading">
   <mat-form-field class="field">
     <mat-label class="label">Reporte</mat-label>
-    <mat-select [(ngModel)]="selectedReport">
+    <mat-select>
       @for (report of reports; track report) {
-        <mat-option [value]="report">{{ report }}</mat-option>
+        <mat-option [value]="report" (click)="selectReport(report)">{{ report.label }}</mat-option>
       }
     </mat-select>
   </mat-form-field>

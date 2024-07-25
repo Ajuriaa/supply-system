@@ -9,3 +9,4 @@ export * from './uploader.mutation';
 export * from './entry.mutations';
 export * from './output.mutations';
 export * from './group.mutations';
+export * from './report.queries';
