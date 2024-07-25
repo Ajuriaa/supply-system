@@ -72,7 +72,6 @@ export class ReportsComponent {
   }
 
   private generateData(objArray: any[]): any {
-    console.log('dentro', objArray);
     if(objArray.length === 0) return [];
     return objArray.map(obj => Object.values(obj));
   }

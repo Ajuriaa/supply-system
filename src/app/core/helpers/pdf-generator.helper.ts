@@ -9,6 +9,8 @@ import { IProduct, IRequisition, ISupplier } from 'src/app/admin/interfaces';
 })
 export class PDFHelper {
   private isFirstPageDrawn = false;
+  private finalY = 0;
+
   constructor() {}
 
   public generatePDF(formattedData: any[], columns: string[], title: string, dates = false, start?: Date, end?: Date, isReport = false, total = 0): void {
@@ -45,10 +47,25 @@ export class PDFHelper {
         const margin = 4;
         doc.setFillColor(blue);
         doc.rect(margin, margin, 10, pageSize.height-2*margin, 'F');
+        this.finalY = data.cursor?.y || 95;
       },
     });
     const pageCount = (doc as any).internal.getNumberOfPages();
     const footerHeight = doc.internal.pageSize.height - 7;
+    const totalY = this.finalY + 5;
+    const rowHeight = 20;
+    const totalString = 'Total:    L.' + total;
+    const startX = doc.internal.pageSize.width - doc.getTextWidth('Total: ' + total) - 15;
+
+    if (isReport) {
+      doc.setFontSize(12);
+      if (totalY + rowHeight > doc.internal.pageSize.height) {
+        doc.addPage();
+        doc.text(totalString, startX, totalY);
+      } else {
+        doc.text(totalString, startX, totalY);
+      }
+    }
 
     // Footer
     for(let i = 1; i <= pageCount; i++) {
