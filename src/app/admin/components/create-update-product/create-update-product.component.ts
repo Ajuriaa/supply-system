@@ -56,6 +56,7 @@ export class CreateUpdateProductComponent implements OnInit {
       minimum: [1, [Validators.required]],
       unit: ['', [Validators.required]],
       group: ['', [Validators.required]],
+      batchedNumber: [0],
       perishable: [false],
       batched: [false]
     });
@@ -70,6 +71,10 @@ export class CreateUpdateProductComponent implements OnInit {
 
   public isPerishable(): boolean {
     return this.productForm.value.perishable;
+  }
+
+  public isBatched(): boolean {
+    return this.productForm.value.batched || this.data.product.batched;
   }
 
   public async onSubmit(): Promise<void> {
@@ -95,6 +100,8 @@ export class CreateUpdateProductComponent implements OnInit {
       fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, fileName);
     }
 
+    const batchedNumber = this.isBatched() ? this.productForm.value.batchedNumber : 0;
+
     const data: any = {
       id: this.data.product.id,
       name: this.productForm.value.name,
@@ -102,6 +109,7 @@ export class CreateUpdateProductComponent implements OnInit {
       unit: this.productForm.value.unit,
       perishable: this.productForm.value.perishable,
       batched: this.productForm.value.perishable ? false : this.productForm.value.batched,
+      batchedNumber,
       groupId: this.groups.find((group) => group.name === this.productForm.value.group)?.id || this.groups[0].id,
       imageUrl: file
     };
@@ -144,7 +152,10 @@ export class CreateUpdateProductComponent implements OnInit {
       name: this.data.product.name,
       minimum: this.data.product.minimum,
       unit: this.data.product.unit,
-      group: this.data.product.group.name
+      group: this.data.product.group.name,
+      batchedNumber: this.data.product.batchedNumber,
+      perishable: this.data.product.perishable,
+      batched: this.data.product.batched
     });
   }
 

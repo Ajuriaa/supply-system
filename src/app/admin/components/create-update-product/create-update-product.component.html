@@ -49,6 +49,18 @@
         >
       </mat-form-field>
     </div>
+    <mat-form-field class="field" *ngIf="isBatched()">
+      <mat-label class="label">Número correlativo</mat-label>
+      <input
+        matInput
+        [readonly]="!isBatched()"
+        class="input"
+        min="1"
+        type="number"
+        formControlName="batchedNumber"
+        placeholder="Ingrese el número correlativo actual"
+      >
+    </mat-form-field>
     <div class="flex-center" *ngIf="isCreate">
       <div class="add" (click)="openGroupModal()">
         <i class="uil uil-plus-circle"></i>

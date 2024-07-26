@@ -20,6 +20,7 @@ export const EMPTY_PRODUCT: IProduct = {
   name: "",
   unit: "",
   batches: [],
+  batchedNumber: 0,
   group: EMPTY_GROUP
 };
 

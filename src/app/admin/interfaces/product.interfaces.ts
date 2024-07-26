@@ -6,6 +6,7 @@ export interface IProduct {
   imageUrl?: string;
   perishable: boolean;
   batched: boolean;
+  batchedNumber: number;
   batches: IBatch[];
   group: IGroup;
 }
