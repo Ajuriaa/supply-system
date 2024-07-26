@@ -61,13 +61,7 @@ export class InventoryComponent implements OnInit {
   }
 
   public getAmount(product: IProduct): number {
-    const amount = product.batches.length > 0 ? product.batches.reduce((acc, batch) => acc + batch.quantity, 0) : 0;
-    if(amount < this.minAmount) {
-      this.minAmount = amount;
-      this.minProduct = product;
-    }
-
-    return amount;
+    return product.batches.length > 0 ? product.batches.reduce((acc, batch) => acc + batch.quantity, 0) : 0;
   }
 
   public generatePDF(): void {
@@ -131,6 +125,7 @@ export class InventoryComponent implements OnInit {
       this.products = data;
       this.filteredProducts = data;
       this.getClosestDueDate();
+      this.getLowestStock();
       this.loading = false;
     });
   }
@@ -148,5 +143,15 @@ export class InventoryComponent implements OnInit {
       const closestDueDate = dueDates.sort((a, b) => a.due.valueOf() - b.due.valueOf())[0];
       this.dueProduct = closestDueDate.product;
     }
+  }
+
+  private getLowestStock(): void {
+    this.filteredProducts.forEach(product => {
+      const amount = product.batches.length > 0 ? product.batches.reduce((acc, batch) => acc + batch.quantity, 0) : 0;
+      if(amount < this.minAmount) {
+        this.minAmount = amount;
+        this.minProduct = product;
+      }
+    });
   }
 }
