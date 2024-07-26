@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { IProduct } from 'src/app/admin/interfaces/product.interfaces';
-import { IRequisition, ISupplier } from 'src/app/admin/interfaces';
+import { IHistory, IMergedHistory, IRequisition, ISupplier } from 'src/app/admin/interfaces';
 import { Model } from '../enums';
 
 @Injectable({
@@ -35,6 +35,14 @@ export class SearchService {
         requisition.bossName.toLowerCase().includes(term.toLowerCase()) ||
         requisition.department.toLowerCase().includes(term.toLowerCase()) ||
         requisition.employeeId.toString().includes(term)
+      );
+    }
+    if(dataModel === Model.History) {
+      return data.filter((history: IMergedHistory) =>
+        history.product.toLowerCase().includes(term.toLowerCase()) ||
+        history.unit.toLowerCase().includes(term.toLowerCase()) ||
+        history.type.toLowerCase().includes(term.toLowerCase()) ||
+        history.range.toLowerCase().includes(term.toLowerCase())
       );
     }
     return data;
