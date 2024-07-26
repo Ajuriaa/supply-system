@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environments';
 import { IProductRequisition } from '../interfaces';
+import { IRange } from '../components';
 
 @Injectable({
   providedIn: 'root'
@@ -73,9 +74,9 @@ export class RequisitionMutations {
     });
   }
 
-  public updateRequisition(productsRequisition: Partial<IProductRequisition>[]): Promise<boolean> {
+  public updateRequisition(productsRequisition: Partial<IProductRequisition>[], ranges: IRange[]): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
-      this.http.post<boolean>(`${environment.apiUrl}/update-requisition`, productsRequisition).subscribe(
+      this.http.post<boolean>(`${environment.apiUrl}/update-requisition`, { productsRequisition, ranges }).subscribe(
         (response: boolean) => {
           if (response) {
             this.toaster.success('Requisición actualizada correctamente', 'Listo!');
