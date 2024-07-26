@@ -15,7 +15,7 @@ const OPTIONS = [
     { value: 'daily', label: 'Salidas Diarias', columns: ['Fecha', 'Día', 'Costo (L.)'] },
     { value: 'groups', label: 'Salidas por Grupo', columns: ['Grupo', 'No. Productos', 'Costo (L.)'] },
     { value: 'entries', label: 'Entradas por Producto', columns: ['Producto', 'Unidad', 'Cantidad', 'Costo (L.)'] },
-    { value: 'providers', label: 'Entradas por Proveedor', columns: ['Producto', 'Cantidad'] },
+    { value: 'suppliers', label: 'Entradas por Proveedor', columns: ['Proveedor', 'Entregas', 'Costo (L.)'] },
     { value: 'stock', label: 'Aviso Stock Bajo', columns: ['Producto', 'Cantidad'] }
   ];
 
