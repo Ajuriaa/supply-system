@@ -106,7 +106,7 @@ export class HistoryComponent implements OnInit {
 
     this.history.outputs.forEach(output => {
       this.mergedHistory.push({
-        date: output.date,
+        date: output.systemDate,
         product: output.product.name,
         unit: output.product.unit,
         initialQuantity: output.currentQuantity + output.quantity,
@@ -118,7 +118,7 @@ export class HistoryComponent implements OnInit {
       });
     });
 
-    this.mergedHistory.sort((a: any, b: any) => moment.utc(b.date).diff(moment.utc(a.date)));
+    this.mergedHistory.sort((a: any, b: any) => moment(b.date).diff(moment(a.date)));
 
     this.filteredHistory = this.mergedHistory.filter(history => moment.utc(history.date).month() === month);
     this.loading = false;

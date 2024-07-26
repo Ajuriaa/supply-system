@@ -10,6 +10,7 @@ export interface IOutput {
   price: number;
   requisition?: IRequisition;
   motive: string;
+  systemDate: Date;
 }
 
 export interface IHistory {
