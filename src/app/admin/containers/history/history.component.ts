@@ -11,6 +11,8 @@ import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
 import { HistoryQueries } from '../../services';
 import { IHistory, IMergedHistory } from '../../interfaces';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'price', 'document'];
 
@@ -20,7 +22,8 @@ const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'qu
   imports: [
     LoadingComponent, CommonModule, PrimaryButtonComponent,
     MatInputModule, FormsModule, NgxPaginationModule,
-    NoResultComponent, MatTableModule, DateFilterComponent
+    NoResultComponent, MatTableModule, DateFilterComponent,
+    MatSelectModule, MatOptionModule
   ],
   templateUrl: './history.component.html',
   styleUrl: './history.component.scss'
@@ -57,6 +60,11 @@ export class HistoryComponent implements OnInit {
 
   public generatePDF(): void {
     this.pdfHelper.generateHistoryPDF(this.filteredHistory, this.start, this.end);
+  }
+
+  public filter(type: string): void {
+    this.filteredHistory = this.mergedHistory.filter((history) => history.type === type);
+    this.page = 1;
   }
 
   public goToUrl(link: string): void {

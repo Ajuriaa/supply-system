@@ -21,6 +21,13 @@
     </div>
     <div class="buttons">
       <app-primary-button class="button" (btnClick)="generatePDF()">IMPRIMIR LISTADO</app-primary-button>
+      <mat-form-field class="field">
+        <mat-label class="label">Filtro</mat-label>
+        <mat-select>
+            <mat-option value="Salidas" (click)="filter('Salida')"> Salidas </mat-option>
+            <mat-option value="Entradas" (click)="filter('Entrada')"> Entradas </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </section>
   <section class="table-container">
