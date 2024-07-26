@@ -16,7 +16,7 @@ const OPTIONS = [
     { value: 'groups', label: 'Salidas por Grupo', columns: ['Grupo', 'No. Productos', 'Costo (L.)'] },
     { value: 'entries', label: 'Entradas por Producto', columns: ['Producto', 'Unidad', 'Cantidad', 'Costo (L.)'] },
     { value: 'suppliers', label: 'Entradas por Proveedor', columns: ['Proveedor', 'Entregas', 'Costo (L.)'] },
-    { value: 'stock', label: 'Aviso Stock Bajo', columns: ['Producto', 'Cantidad'] }
+    { value: 'stock', label: 'Aviso Stock Bajo', columns: ['Producto', 'Unidad', 'Cantidad Disponible', 'Cantidad Mínima'] }
   ];
 
 @Component({
@@ -52,9 +52,10 @@ export class ReportsComponent {
     }
 
     const withDate = !['stock', 'daily'].includes(this.selectedReport.value);
+    const withTotal = !['stock'].includes(this.selectedReport.value);
     this.loading = true;
     this.reportQuery.getReport(this.selectedReport.value, this.start, this.end).subscribe(({ data }) => {
-      this.pdfHelper.generatePDF(this.generateData(data.info), this.selectedReport.columns, this.selectedReport.label, withDate, this.startDate, this.endDate, true, data.total);
+      this.pdfHelper.generatePDF(this.generateData(data.info), this.selectedReport.columns, this.selectedReport.label, withDate, this.startDate, this.endDate, withTotal, data.total);
       this.loading = false;
       this.selectedReport = { value: '', label: '', columns: [''] };
     });
