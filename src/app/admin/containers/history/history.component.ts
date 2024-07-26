@@ -99,7 +99,9 @@ export class HistoryComponent implements OnInit {
           quantity: productEntry.quantity,
           finalQuantity: productEntry.currentQuantity,
           document: entry?.invoiceUrl || '',
-          price: productEntry.price
+          price: productEntry.price,
+          batched: false,
+          range: ''
         });
       });
     });
@@ -114,7 +116,9 @@ export class HistoryComponent implements OnInit {
         quantity: output.quantity,
         finalQuantity: output.currentQuantity,
         document: output.requisition?.documentUrl || '',
-        price: output.price
+        price: output.price,
+        batched: output.product.batched,
+        range: output.product.batched ? `${output.startRange} - ${output.endRange}` : ''
       });
     });
 

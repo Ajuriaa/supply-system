@@ -10,6 +10,8 @@ export interface IOutput {
   price: number;
   requisition?: IRequisition;
   motive: string;
+  startRange: number;
+  endRange: number;
   systemDate: Date;
 }
 
@@ -27,5 +29,7 @@ export interface IMergedHistory {
   quantity: number;
   price: number;
   finalQuantity: number;
-  document: string
+  document: string;
+  batched: boolean;
+  range: string;
 }
