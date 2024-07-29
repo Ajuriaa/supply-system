@@ -36,6 +36,7 @@ const DAILY_OPTIONS = {
 const GROUP_OPTIONS = {
   maintainAspectRatio: false,
   responsive: true,
+  animateRotate: true,
   plugins:{
     title: {
       display: true,
@@ -71,6 +72,9 @@ export class DashboardComponent implements OnInit {
   public dashboardInfo: IDashboard = EMPTY_DASHBOARD;
   public start = moment.utc().startOf('month').format('YYYY-MM-DD');
   public end = moment.utc().format('YYYY-MM-DD');
+  private dailyChart: Chart | null = null;
+  private depChart: Chart | null = null;
+  private groupChart: Chart | null | any = null;
 
   constructor(
     private dashboardQuery: DashboardQueries
@@ -111,8 +115,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private departmentChart(): void {
+    if(this.depChart) {
+      this.depChart.destroy();
+    }
     const chartElem = <HTMLCanvasElement>document.getElementById(`depts`);
-    new Chart(
+    this.depChart = new Chart(
       chartElem, {
         type: 'bar',
         data: {
@@ -140,8 +147,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private createGroupedChart(): void {
+    if(this.groupChart) {
+      this.groupChart.destroy();
+    }
     const chartElem = <HTMLCanvasElement>document.getElementById(`groups`);
-    new Chart(
+    this.groupChart = new Chart(
       chartElem, {
         type: 'doughnut',
         data: {
@@ -158,8 +168,11 @@ export class DashboardComponent implements OnInit {
   }
 
   private createDailyChart(): void {
+    if(this.dailyChart) {
+      this.dailyChart.destroy();
+    }
     const chartElem = <HTMLCanvasElement>document.getElementById(`days`);
-    new Chart(
+    this.dailyChart = new Chart(
       chartElem, {
         type: 'bar',
         data: {
