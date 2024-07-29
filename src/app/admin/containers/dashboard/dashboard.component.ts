@@ -65,7 +65,6 @@ const COLORS = [
 })
 export class DashboardComponent implements OnInit {
   public loading = true;
-  public loadingDashboard = true;
   public yearlyStats: IYearlyStats[] = [];
   public totalRevenue = 0;
   public topEarningMonth: IYearlyStats = { month: '', revenue: 0 };
@@ -93,7 +92,7 @@ export class DashboardComponent implements OnInit {
 
   public filterDates(dates: { startDate: Date | null, endDate: Date | null }): void {
     if(dates.startDate && dates.endDate) {
-      this.loadingDashboard = true;
+      this.loading = true;
       this.start = moment.utc(dates.startDate).format('YYYY-MM-DD');
       this.end = moment.utc(dates.endDate).format('YYYY-MM-DD');
       this.fetchDashboard(this.start, this.end);
@@ -103,7 +102,7 @@ export class DashboardComponent implements OnInit {
   private fetchDashboard(start: string, end: string): void {
     this.dashboardQuery.getDashboard(start, end).subscribe(({ data }) => {
       this.dashboardInfo = data;
-      this.loadingDashboard = false;
+      this.loading = false;
       this.generateCharts();
     });
   }
