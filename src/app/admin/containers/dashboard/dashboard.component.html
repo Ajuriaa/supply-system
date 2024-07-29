@@ -1,4 +1,37 @@
-<app-loading *ngIf="loading" class="loading"></app-loading>
-<div class="container" *ngIf="!loading">
-  DASHBOARD WORKS!
+<app-loading class="loading" *ngIf="loading"></app-loading>
+
+<div class="container">
+  <div class="top">
+    <div class="months-container">
+      <canvas id=months></canvas>
+    </div>
+    <div class="top-stats">
+      <p>Ventas Totales</p>
+      <p>1027.68K</p>
+      <p>Mes de mayor rendimiento:</p>
+      <p>MAYO</p>
+      <p>523763.77</p>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="upper">
+      <div class="products-wrapper">
+      </div>
+      <div class="suppliers-wrapper">
+        <canvas #suppliers></canvas>
+      </div>
+      <div>
+        <p class="title">Ventas Totales (Cantidad)</p>
+        <p>L. 1029.68K</p>
+      </div>
+    </div>
+    <div class="lower">
+      <div class="group-wrapper">
+        <canvas #groups></canvas>
+      </div>
+      <div class="departments-wrapper">
+        <canvas #depts></canvas>
+      </div>
+    </div>
+  </div>
 </div>
