@@ -6,11 +6,11 @@
       <canvas id=months></canvas>
     </div>
     <div class="top-stats">
-      <p>Ventas Totales</p>
-      <p>1027.68K</p>
+      <p class="title">Ventas Totales</p>
+      <p class="currency">{{ totalRevenue | currency:'HNL':'L.':'2.2' }}</p>
       <p>Mes de mayor rendimiento:</p>
-      <p>MAYO</p>
-      <p>523763.77</p>
+      <p><strong>{{ topEarningMonth.month }}</strong></p>
+      <p class="currency">{{ topEarningMonth.revenue | currency:'HNL':'L.':'2.2' }}</p>
     </div>
   </div>
   <div class="bottom">

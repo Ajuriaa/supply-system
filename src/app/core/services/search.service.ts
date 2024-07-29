@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import moment from 'moment';
 import { IProduct } from 'src/app/admin/interfaces/product.interfaces';
-import { IHistory, IMergedHistory, IRequisition, ISupplier } from 'src/app/admin/interfaces';
+import { IMergedHistory, IRequisition, ISupplier } from 'src/app/admin/interfaces';
 import { Model } from '../enums';
 
 @Injectable({

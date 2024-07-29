@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadingComponent, SideBarComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
-import Chart from 'chart.js/auto'
+import { Chart } from 'chart.js/auto';
 import { DashboardQueries } from '../../services';
 import { IYearlyStats } from '../../interfaces';
 
@@ -16,7 +16,7 @@ const MONTH_OPTIONS = {
     },
     legend: { display: false },
   }
-}
+};
 
 const COLORS = [
   "#E57373",
@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
       this.totalRevenue = data.reduce((acc, curr) => acc + curr.revenue, 0);
       this.topEarningMonth = data.reduce((acc, curr) => acc.revenue > curr.revenue ? acc : curr, { month: '', revenue: 0 });
       this.loading = false;
-      this.createYearlyChart()
+      this.createYearlyChart();
     });
   }
 
@@ -76,6 +76,6 @@ export class DashboardComponent implements OnInit {
         },
         options: MONTH_OPTIONS
       }
-    )
+    );
   }
 }

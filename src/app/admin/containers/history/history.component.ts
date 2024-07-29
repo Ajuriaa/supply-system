@@ -9,10 +9,10 @@ import { EMPTY_HISTORY, PDFHelper } from 'src/app/core/helpers';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableModule } from '@angular/material/table';
 import moment from 'moment';
-import { HistoryQueries } from '../../services';
-import { IHistory, IMergedHistory } from '../../interfaces';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
+import { HistoryQueries } from '../../services';
+import { IHistory, IMergedHistory } from '../../interfaces';
 
 const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'price', 'document'];
 
