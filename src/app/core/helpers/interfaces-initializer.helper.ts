@@ -1,4 +1,12 @@
-import { IBatch, IGroup, IHistory, IMergedHistory, IProduct, ISupplier } from "src/app/admin/interfaces";
+import { IBatch, IDashboard, IGroup, IHistory, IMergedHistory, IProduct, ISupplier } from "src/app/admin/interfaces";
+
+export const EMPTY_DASHBOARD: IDashboard = {
+  products: [],
+  days: [],
+  groups: [],
+  departments: [],
+  total: 0
+};
 
 export const EMPTY_GROUP: IGroup = {
   id: 0,

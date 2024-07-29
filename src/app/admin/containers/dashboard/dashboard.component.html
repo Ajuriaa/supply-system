@@ -3,7 +3,7 @@
 <div class="container">
   <div class="top">
     <div class="months-container">
-      <canvas id=months></canvas>
+      <canvas id="months"></canvas>
     </div>
     <div class="top-stats">
       <p class="title">Ventas Totales</p>
@@ -16,22 +16,29 @@
   <div class="bottom">
     <div class="upper">
       <div class="products-wrapper">
+        @for(product of dashboardInfo.products; track product){
+          <div class="product">
+            <p>{{ product.name }}</p>
+            <p>{{ product.quantity | currency:'HNL':'L.':'2.2' }}</p>
+          </div>
+        }
       </div>
-      <div class="suppliers-wrapper">
-        <canvas #suppliers></canvas>
+      <div class="days-wrapper">
+        <canvas id="days"></canvas>
       </div>
-      <div>
+      <div class="total-wrapper">
         <p class="title">Ventas Totales (Cantidad)</p>
-        <p>L. 1029.68K</p>
+        <p class="currency">{{ dashboardInfo.total | currency:'HNL':'L.':'2.2' }}</p>
       </div>
     </div>
     <div class="lower">
       <div class="group-wrapper">
-        <canvas #groups></canvas>
+        <canvas id="groups"></canvas>
       </div>
       <div class="departments-wrapper">
-        <canvas #depts></canvas>
+        <canvas id="depts"></canvas>
       </div>
     </div>
   </div>
+  <app-date-filter class="date-filter" (dateRangeChanged)="filterDates($event)"></app-date-filter>
 </div>
