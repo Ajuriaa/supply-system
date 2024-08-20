@@ -24,6 +24,7 @@
     "@angular/router": "^17.3.0",
     "@iplab/ngx-file-upload": "^17.1.0",
     "angular-animations": "^0.11.0",
+    "chart.js": "^4.4.4",
     "chartjs": "^0.3.24",
     "eslint-plugin-import": "^2.29.1",
     "jspdf": "^2.5.1",
