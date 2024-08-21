@@ -7,6 +7,7 @@ export * from './requisition.mutations';
 export * from './history.queries';
 export * from './uploader.mutation';
 export * from './entry.mutations';
+export * from './entry.queries';
 export * from './output.mutations';
 export * from './group.mutations';
 export * from './report.queries';

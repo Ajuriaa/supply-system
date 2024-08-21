@@ -18,6 +18,16 @@
       </mat-autocomplete>
     </mat-form-field>
     <mat-form-field class="field">
+      <mat-label>Número de Factura</mat-label>
+      <input
+        type="text"
+        placeholder="Factura"
+        required
+        matInput
+        formControlName="invoiceNumber"
+      />
+    </mat-form-field>
+    <mat-form-field class="field">
       <mat-label>Fecha</mat-label>
       <input formControlName="date" matInput [matDatepicker]="picker">
       <mat-hint>DD/MM/YYYY</mat-hint>
@@ -76,6 +86,7 @@
   </div>
   <mat-error class="error" *ngIf="error">Recuerda llenar todos los campos requeridos*</mat-error>
   <mat-error class="error" *ngIf="noInvoice">Recuerda adjuntar la factura*</mat-error>
+  <mat-error class="error" *ngIf="invoiceError">Ya existe una factura con ese número* <strong class="pointer" (click)="seeInvoice()">CLICK PARA VER</strong></mat-error>
   <div class="table-container">
     <table mat-table [dataSource]="productEntries | paginate: { itemsPerPage: 5, currentPage: page }" class="table" *ngIf="productEntries.length > 0">
       <ng-container matColumnDef="product">

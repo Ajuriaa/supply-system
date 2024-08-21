@@ -17,8 +17,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import moment from 'moment';
 import { environment } from 'src/environments/environments';
-import { ProductQueries, SuppliersQueries, UploaderService } from '../../services';
-import { IProduct, ISupplier } from '../../interfaces';
+import { EntryQueries, ProductQueries, SuppliersQueries, UploaderService } from '../../services';
+import { IEntryInvoice, IProduct, ISupplier } from '../../interfaces';
 import { ConfirmInputComponent, CreateUpdateProductComponent } from '../../components';
 import { FileNameHelper } from '../../helpers';
 
@@ -34,6 +34,7 @@ export interface ICreateEntry {
   invoiceUrl: string;
   date: Date;
   supplierId: number;
+  invoiceNumber: string;
 }
 
 @Component({
@@ -54,6 +55,7 @@ export class InputComponent implements OnInit {
   public loading = true;
   public error = false;
   public products: IProduct[] = [];
+  public invoiceLink = '';
   public suppliers: ISupplier[] = [];
   public showProducts = false;
   public selectedSupplier: ISupplier = EMPTY_SUPPLIER;
@@ -65,6 +67,8 @@ export class InputComponent implements OnInit {
   public productEntries: IEntryData[] = [];
   public invoice!: File;
   public noInvoice = false;
+  public invoiceList: IEntryInvoice[] = [];
+  public invoiceError = false;
   public fileUrl = environment.filesUrl;
   public page = 1;
 
@@ -73,6 +77,7 @@ export class InputComponent implements OnInit {
     private searchEngine: SearchService,
     private dialog: MatDialog,
     private productQuery: ProductQueries,
+    private entryQuery: EntryQueries,
     private supplierQuery: SuppliersQueries,
     private route: ActivatedRoute,
     private uploaderService: UploaderService,
@@ -83,6 +88,7 @@ export class InputComponent implements OnInit {
     this.entryForm = this.formBuilder.group({
       supplier: ['', [Validators.required]],
       date: ['', [Validators.required]],
+      invoiceNumber: ['']
     });
     this.requisitionForm = this.formBuilder.group({
       product: ['', [Validators.required]],
@@ -97,6 +103,7 @@ export class InputComponent implements OnInit {
     );
     this.getProductList();
     this.getSuppliers();
+    this.getInvoiceList();
   }
 
   public editProduct(entry: IEntryData): void {
@@ -172,9 +179,14 @@ export class InputComponent implements OnInit {
     this.clearForm();
   }
 
+  public seeInvoice(): void {
+    window.open(this.invoiceLink, "_blank");
+  }
+
   public continue(): void {
     this.error = false;
     this.noInvoice = false;
+    this.invoiceError = false;
 
     if(this.entryForm.invalid) {
       this.error = true;
@@ -183,6 +195,15 @@ export class InputComponent implements OnInit {
       this.noInvoice = true;
       return;
     }
+    const invoiceNumber = this.entryForm.controls.invoiceNumber.value;
+    const existingInvoice = this.invoiceList.find((invoice) => invoice.invoiceNumber === invoiceNumber);
+
+    if (existingInvoice) {
+      this.invoiceError = true;
+      this.invoiceLink = existingInvoice.invoiceUrl || '';
+      return;
+    }
+
     this.showProducts = true;
   }
 
@@ -195,7 +216,8 @@ export class InputComponent implements OnInit {
     const entry: ICreateEntry = {
       invoiceUrl,
       date: this.entryForm.controls.date.value,
-      supplierId: this.selectedSupplier.id
+      supplierId: this.selectedSupplier.id,
+      invoiceNumber: this.entryForm.controls.invoiceNumber.value
     };
 
     fileUploaded ? this.openModal(entry) : '' ;
@@ -218,6 +240,12 @@ export class InputComponent implements OnInit {
     this.productQuery.getAllProducts().subscribe(({ data }) => {
       this.products = data;
       this.loading = false;
+    });
+  }
+
+  private async getInvoiceList(): Promise<void> {
+    this.entryQuery.getInvoices().subscribe(( data ) => {
+      this.invoiceList = data;
     });
   }
 
