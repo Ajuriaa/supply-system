@@ -7,9 +7,9 @@
   <form [formGroup]="productForm" class="form">
     <div class="flex-center">
       <mat-form-field class="field">
-      <mat-label class="label">Producto</mat-label>
-      <input
-      matInput
+        <mat-label class="label">Producto</mat-label>
+        <input
+          matInput
           required
           class="input"
           formControlName="name"
@@ -27,8 +27,8 @@
     </div>
     <div class="flex-center">
       <mat-form-field class="field">
-      <mat-label class="label">Unidad</mat-label>
-      <input
+        <mat-label class="label">Unidad</mat-label>
+        <input
           matInput
           required
           class="input"
@@ -61,13 +61,14 @@
         placeholder="Ingrese el número correlativo actual"
       >
     </mat-form-field>
-    <div class="flex-center" *ngIf="isCreate">
+    <div class="flex-center">
       <div class="add" (click)="openGroupModal()">
         <i class="uil uil-plus-circle"></i>
         <p class="label">Agregar Grupo</p>
       </div>
-      <mat-checkbox class="input" formControlName="perishable">Perecedero</mat-checkbox>
-      <mat-checkbox class="input" formControlName="batched" [disabled]="isPerishable()">Lotificado?</mat-checkbox>
+      <mat-checkbox class="input" formControlName="active">Activo</mat-checkbox>
+      <mat-checkbox *ngIf="isCreate" class="input" formControlName="perishable">Perecedero</mat-checkbox>
+      <mat-checkbox *ngIf="isCreate" class="input" formControlName="batched" [disabled]="isPerishable()">Lotificado?</mat-checkbox>
     </div>
   </form>
 

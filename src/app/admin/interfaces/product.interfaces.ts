@@ -8,6 +8,7 @@ export interface IProduct {
   batched: boolean;
   batchedNumber: number;
   batches: IBatch[];
+  active: boolean;
   group: IGroup;
 }
 

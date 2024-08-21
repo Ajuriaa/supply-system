@@ -115,7 +115,7 @@ export class CreateRequisitionComponent implements OnInit {
   }
 
   private filterProducts(products: IProduct[]): IProduct[] {
-    return products.filter((product) => product.batches.reduce((acc, batch) => acc + batch.quantity, 0));
+    return products.filter((product) => product.batches.reduce((acc, batch) => acc + batch.quantity, 0) > 0 && product.active);
   }
 
   private checkProductRequisition(product: IProduct, quantity: number): boolean {

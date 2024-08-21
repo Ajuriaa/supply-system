@@ -4,7 +4,6 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dial
 import { FileDropComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -22,7 +21,7 @@ import { CreateGroupComponent } from '../create-group/create-group.component';
     LoadingComponent, CommonModule, PrimaryButtonComponent,
     FileDropComponent, MatFormFieldModule, FormsModule,
     ReactiveFormsModule, MatInputModule, MatSelectModule,
-    MatSlideToggleModule, MatCheckboxModule
+    MatCheckboxModule
   ],
   providers: [ProductMutations, ProductQueries, FileNameHelper, UploaderService],
   templateUrl: './create-update-product.component.html',
@@ -57,7 +56,8 @@ export class CreateUpdateProductComponent implements OnInit {
       group: ['', [Validators.required]],
       batchedNumber: [0],
       perishable: [false],
-      batched: [false]
+      batched: [false],
+      active: [true]
     });
 
     this.getGroups();
@@ -109,7 +109,8 @@ export class CreateUpdateProductComponent implements OnInit {
       batched: this.productForm.value.perishable ? false : this.productForm.value.batched,
       batchedNumber,
       groupId: this.groups.find((group) => group.name === this.productForm.value.group)?.id || this.groups[0].id,
-      imageUrl: file
+      imageUrl: file,
+      active: this.productForm.value.active
     };
 
     if(fileUploaded){
@@ -153,7 +154,8 @@ export class CreateUpdateProductComponent implements OnInit {
       group: this.data.product.group.name,
       batchedNumber: this.data.product.batchedNumber,
       perishable: this.data.product.perishable,
-      batched: this.data.product.batched
+      batched: this.data.product.batched,
+      active: this.data.product.active
     });
   }
 

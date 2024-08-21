@@ -29,7 +29,8 @@ export const EMPTY_PRODUCT: IProduct = {
   unit: "",
   batches: [],
   batchedNumber: 0,
-  group: EMPTY_GROUP
+  group: EMPTY_GROUP,
+  active: false
 };
 
 export const EMPTY_HISTORY: IHistory = {
