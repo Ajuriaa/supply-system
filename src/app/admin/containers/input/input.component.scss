@@ -24,4 +24,9 @@
   .error {
     font-size: 1.5rem;
   }
+
+  .btn-container {
+    @include flex-center;
+    gap: 2rem;
+  }
 }

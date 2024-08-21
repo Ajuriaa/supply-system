@@ -68,7 +68,12 @@
   </form>
   <app-file-drop class="file-uploader" (selectedFiles)="getFiles($event)" *ngIf="!showProducts"></app-file-drop>
   <app-primary-button class="btn" (btnClick)="continue()" *ngIf="!showProducts">Continuar</app-primary-button>
-  <app-primary-button class="btn" (btnClick)="addProduct()" *ngIf="showProducts">Agregar Producto</app-primary-button>
+  <div class="btn-container">
+    <app-primary-button class="btn" (btnClick)="openCreateUpdateProductModal()" *ngIf="showProducts">
+      Crear Producto
+    </app-primary-button>
+    <app-primary-button class="btn" (btnClick)="addProduct()" *ngIf="showProducts">Agregar Producto</app-primary-button>
+  </div>
   <mat-error class="error" *ngIf="error">Recuerda llenar todos los campos requeridos*</mat-error>
   <mat-error class="error" *ngIf="noInvoice">Recuerda adjuntar la factura*</mat-error>
   <div class="table-container">

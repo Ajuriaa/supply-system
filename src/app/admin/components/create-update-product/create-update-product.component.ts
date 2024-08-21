@@ -32,7 +32,6 @@ export class CreateUpdateProductComponent implements OnInit {
   public isCreate = false;
   public loading = true;
   public error = false;
-  public fileError = false;
   public groups: IGroup[] = [];
   public productForm!: FormGroup;
   public fileUrl = environment.filesUrl;
@@ -79,15 +78,12 @@ export class CreateUpdateProductComponent implements OnInit {
 
   public async onSubmit(): Promise<void> {
     this.error = false;
-    this.fileError = false;
 
     if (this.productForm.invalid) {
       this.error = true;
       return;
-    } else if (!this.selectedFile && this.isCreate) {
-      this.fileError = true;
-      return;
     }
+
     this.loading = true;
 
     let file = this.data.product.imageUrl;
@@ -99,6 +95,8 @@ export class CreateUpdateProductComponent implements OnInit {
       file = this.fileUrl + 'products/' + realName;
       fileUploaded = await this.uploaderService.uploadFile(this.selectedFile, fileName);
     }
+
+    !this.selectedFile ? file = 'https://static.vecteezy.com/system/resources/previews/028/047/017/non_2x/3d-check-product-free-png.png': null;
 
     const batchedNumber = this.isBatched() ? this.productForm.value.batchedNumber : 0;
 

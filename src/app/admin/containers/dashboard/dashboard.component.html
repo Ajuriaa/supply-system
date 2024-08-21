@@ -8,7 +8,7 @@
     <div class="top-stats">
       <p class="title">Ventas Totales</p>
       <p class="currency">{{ totalRevenue | currency:'HNL':'L.':'2.2' }}</p>
-      <p>Mes de mayor rendimiento:</p>
+      <p>Mes de mayor consumo:</p>
       <p><strong>{{ topEarningMonth.month }}</strong></p>
       <p class="currency">{{ topEarningMonth.revenue | currency:'HNL':'L.':'2.2' }}</p>
     </div>
@@ -16,6 +16,8 @@
   <div class="bottom">
     <div class="upper">
       <div class="products-wrapper">
+        <p *ngIf="dashboardInfo.products.length <= 0">NO HAY REGISTRO</p>
+        <p *ngIf="dashboardInfo.products.length > 0">Productos más consumidos</p>
         @for(product of dashboardInfo.products; track product){
           <div class="product">
             <p>{{ product.name }}</p>

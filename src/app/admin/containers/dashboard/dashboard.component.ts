@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardQuery.getYearlyStats().subscribe(({ data }) => {
       this.yearlyStats = data;
-      this.totalRevenue = data.reduce((acc, curr) => acc + curr.revenue, 0);
+      this.totalRevenue = data.reduce((acc, curr) => acc + +curr.revenue, 0);
       this.topEarningMonth = data.reduce((acc, curr) => acc.revenue > curr.revenue ? acc : curr, { month: '', revenue: 0 });
       this.loading = false;
       this.createYearlyChart();

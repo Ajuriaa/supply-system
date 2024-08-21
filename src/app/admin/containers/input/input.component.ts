@@ -19,7 +19,7 @@ import moment from 'moment';
 import { environment } from 'src/environments/environments';
 import { ProductQueries, SuppliersQueries, UploaderService } from '../../services';
 import { IProduct, ISupplier } from '../../interfaces';
-import { ConfirmInputComponent } from '../../components';
+import { ConfirmInputComponent, CreateUpdateProductComponent } from '../../components';
 import { FileNameHelper } from '../../helpers';
 
 const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit', 'price', 'dueDate', 'actions'];
@@ -115,6 +115,17 @@ export class InputComponent implements OnInit {
   public selectProduct(product: IProduct): void {
     this.selectedProduct = product;
     this.isPerishable(this.selectedProduct.perishable);
+  }
+
+  public openCreateUpdateProductModal(modalType: string = 'create', product: IProduct = EMPTY_PRODUCT): void {
+    this.dialog.open(CreateUpdateProductComponent, {
+      panelClass: 'dialog-style',
+      data: { product, modalType }
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        this.getProductList();
+      }
+    });
   }
 
   public isPerishable(perishable: boolean): void {

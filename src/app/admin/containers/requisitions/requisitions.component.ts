@@ -17,7 +17,7 @@ import { RequisitionQueries } from '../../services';
 import { NameHelper } from '../../helpers';
 import { CancelRequisitionComponent, EditWatchRequisitionComponent, FinishRequisitionComponent, UploadRequisitionComponent } from '../../components';
 
-const TABLE_COLUMNS = ['date', 'state', 'employee', 'boss', 'department', 'document', 'actions'];
+const TABLE_COLUMNS = ['id', 'date', 'state', 'employee', 'boss', 'department', 'document', 'actions'];
 
 @Component({
   selector: 'app-requisition',

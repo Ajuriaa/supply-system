@@ -34,7 +34,8 @@ export class SearchService {
         requisition.employeeName.toLowerCase().includes(term.toLowerCase()) ||
         requisition.bossName.toLowerCase().includes(term.toLowerCase()) ||
         requisition.department.toLowerCase().includes(term.toLowerCase()) ||
-        requisition.employeeId.toString().includes(term)
+        requisition.employeeId.toString().includes(term) ||
+        requisition.id.toString().includes(term)
       );
     }
     if(dataModel === Model.History) {
