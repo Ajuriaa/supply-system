@@ -93,7 +93,8 @@ export class PDFHelper {
   public generateProductsPDF(products: IProduct[]): void {
     const columns = ['Nombre', 'Grupo', 'Cantidad', 'Unidad', 'Vencimiento', 'Precio'];
     const formattedVehicles = this.formatProductsForPDF(products);
-    this.generatePDF(formattedVehicles, columns, 'Listado de Productos',);
+    const total = products.reduce((acc, product) => acc + product.batches.reduce((sum, batch) => sum + +batch.price, 0), 0);
+    this.generatePDF(formattedVehicles, columns, 'Listado de Productos', false, undefined, undefined, true, total);
   }
 
   public generateHistoryPDF(history: any[], start: Date, end: Date): void {
