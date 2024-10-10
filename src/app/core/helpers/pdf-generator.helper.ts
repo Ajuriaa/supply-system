@@ -91,10 +91,12 @@ export class PDFHelper {
   }
 
   public generateProductsPDF(products: IProduct[]): void {
-    const columns = ['Nombre', 'Grupo', 'Cantidad', 'Unidad', 'Vencimiento', 'Precio'];
+    const columns = ['Nombre', 'Grupo', 'Cantidad', 'Unidad', 'Vencimiento', 'Precio', 'Total'];
     const formattedVehicles = this.formatProductsForPDF(products);
-    const total = products.reduce((acc, product) => acc + product.batches.reduce((sum, batch) => sum + +batch.price, 0), 0);
-    this.generatePDF(formattedVehicles, columns, 'Listado de Productos', false, undefined, undefined, true, total);
+    const total = products.reduce((acc, product) =>
+      acc + product.batches.reduce((sum, batch) => sum + (batch.price * batch.quantity), 0), 0
+    );
+    this.generatePDF(formattedVehicles, columns, 'Listado de Productos', false, undefined, undefined, true, +total.toFixed(2));
   }
 
   public generateHistoryPDF(history: any[], start: Date, end: Date): void {
@@ -151,7 +153,8 @@ export class PDFHelper {
         product.batches?.reduce((acc, batch) => acc + batch.quantity, 0),
         product.unit,
         product.batches.length > 0 && product.batches[0].due ? this.getDate(product.batches[0].due) : 'No Registrado',
-        product.batches.length > 0 ? 'L.' + product.batches.reduce((sum, batch) => sum + +batch.price, 0) : 'No Registrado'
+        product.batches.length > 0 ? 'L.' + product.batches.reduce((sum, batch) => sum + +batch.price, 0) : 'No Registrado',
+        product.batches.length > 0 ? 'L.' + product.batches.reduce((sum, batch) => sum + (batch.price * batch.quantity), 0).toFixed(2) : 'No Registrado'
       ];
     });
   }
