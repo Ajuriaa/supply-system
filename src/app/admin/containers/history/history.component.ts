@@ -14,7 +14,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { HistoryQueries } from '../../services';
 import { IHistory, IMergedHistory } from '../../interfaces';
 
-const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'price', 'document'];
+const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'price', 'total','document'];
 
 @Component({
   selector: 'app-history',
