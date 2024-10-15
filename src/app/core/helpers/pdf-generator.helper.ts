@@ -54,7 +54,11 @@ export class PDFHelper {
     const footerHeight = doc.internal.pageSize.height - 7;
     const totalY = this.finalY + 5;
     const rowHeight = 20;
-    const totalString = 'Total:    L.' + total;
+    const formattedTotal = total.toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+    const totalString = 'Total:    L.' + formattedTotal;
     const startX = doc.internal.pageSize.width - doc.getTextWidth('Total: ' + total) - 15;
 
     if (isReport) {
@@ -100,7 +104,7 @@ export class PDFHelper {
   }
 
   public generateHistoryPDF(history: any[], start: Date, end: Date): void {
-    const columns = ['Fecha', 'Producto', 'Unidad', 'Tipo', 'Cantidad Inicial', 'Cantidad', 'Cantidad Final'];
+    const columns = ['Fecha', 'Producto', 'Unidad', 'Tipo', 'Razón', 'Cantidad Inicial', 'Cantidad', 'Cantidad Final'];
     const formattedHistory = this.formatHistoryForPDF(history);
     this.generatePDF(formattedHistory, columns, 'Historial de Productos', true, start, end);
   }
@@ -112,6 +116,7 @@ export class PDFHelper {
         entry.product,
         entry.unit,
         entry.type,
+        entry.motive,
         entry.initialQuantity,
         entry.quantity,
         entry.finalQuantity

@@ -14,7 +14,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { HistoryQueries } from '../../services';
 import { IHistory, IMergedHistory } from '../../interfaces';
 
-const TABLE_COLUMNS = ['date', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'price', 'total','document'];
+const TABLE_COLUMNS = ['date', 'motive', 'product', 'unit', 'type', 'initialQuantity', 'quantity', 'finalQuantity', 'price', 'total', 'document'];
 
 @Component({
   selector: 'app-history',
@@ -106,6 +106,7 @@ export class HistoryComponent implements OnInit {
           type: 'Entrada',
           quantity: productEntry.quantity,
           finalQuantity: productEntry.currentQuantity,
+          motive: entry.supplier.name,
           document: entry?.invoiceUrl || '',
           price: productEntry.price,
           batched: false,
@@ -124,6 +125,7 @@ export class HistoryComponent implements OnInit {
         quantity: output.quantity,
         finalQuantity: output.currentQuantity,
         document: output.requisition?.documentUrl || '',
+        motive: output.requisition?.department || output.motive,
         price: output.price,
         batched: output.product.batched,
         range: output.product.batched ? `${output.startRange} - ${output.endRange}` : ''

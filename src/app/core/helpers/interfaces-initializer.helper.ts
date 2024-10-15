@@ -49,7 +49,8 @@ export const EMPTY_MERGED_HISTORY: IMergedHistory = {
   document: "",
   price: 0,
   batched: false,
-  range: ""
+  range: "",
+  motive: ""
 };
 
 export const EMPTY_SUPPLIER: ISupplier = {

@@ -29,6 +29,7 @@ export interface IMergedHistory {
   quantity: number;
   price: number;
   finalQuantity: number;
+  motive: string
   document: string;
   batched: boolean;
   range: string;

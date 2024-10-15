@@ -43,7 +43,8 @@ export class SearchService {
         history.product.toLowerCase().includes(term.toLowerCase()) ||
         history.unit.toLowerCase().includes(term.toLowerCase()) ||
         history.type.toLowerCase().includes(term.toLowerCase()) ||
-        history.range.toLowerCase().includes(term.toLowerCase())
+        history.range.toLowerCase().includes(term.toLowerCase()) ||
+        history.motive.toLowerCase().includes(term.toLowerCase())
       );
     }
     return data;
