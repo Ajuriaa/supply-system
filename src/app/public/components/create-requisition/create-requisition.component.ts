@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { IProductRequisition, PublicQueries } from '../..';
 import { ConfirmComponent } from '../confirm/confirm.component';
 
-const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit', 'actions'];
+const TABLE_COLUMNS = ['n', 'product', 'group', 'quantity', 'unit', 'actions'];
 
 @Component({
   selector: 'app-create-requisition',
