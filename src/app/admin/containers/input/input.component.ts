@@ -155,7 +155,7 @@ export class InputComponent implements OnInit {
   }
 
   public getDate(input: IEntryData): string {
-    const date  = input.product.perishable && input.product.batches.length > 0 ? moment.utc(input.dueDate).format('DD/MM/YYYY'): 'N/A';
+    const date  = input.product.perishable ? moment.utc(input.dueDate).format('DD/MM/YYYY'): 'N/A';
     return date;
   }
 
@@ -168,6 +168,7 @@ export class InputComponent implements OnInit {
     const alreadyInTable = this.checkProductRequisition(this.selectedProduct, this.requisitionForm.controls.quantity.value);
 
     if(!alreadyInTable) {
+
       const productRequisition: IEntryData = {
         product: this.selectedProduct,
         quantity: this.requisitionForm.controls.quantity.value,
