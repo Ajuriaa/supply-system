@@ -42,7 +42,7 @@ export class RequisitionComponent implements OnInit {
   public monthlyRequisitions = 1;
   public selectedFilter = 'Todos';
   public pending = 0;
-  public filterOptions = ['Todos', 'Pendiente por jefe', 'Pendiente por admin', 'Cancelada', 'Finalizada', 'Activa'];
+  public filterOptions = ['Todos', 'Pendiente por jefe', 'Pendiente por proveeduria', 'Cancelada', 'Finalizada', 'Activa'];
   public end = new Date();
   public start = new Date(this.end.getFullYear(), this.end.getMonth(), 1);
 
@@ -127,7 +127,7 @@ export class RequisitionComponent implements OnInit {
   }
 
   public canCancel(state: string): boolean {
-    return state === 'Pendiente por admin';
+    return state === 'Pendiente por proveeduria';
   }
 
   public canFinish(state: string): boolean {
@@ -135,11 +135,11 @@ export class RequisitionComponent implements OnInit {
   }
 
   public canEdit(state: string): boolean {
-    return state === 'Pendiente por admin';
+    return state === 'Pendiente por proveeduria';
   }
 
   public canWatch(state: string): boolean {
-    return state !== 'Pendiente por admin';
+    return state !== 'Pendiente por proveeduria';
   }
 
   public onFilterChange(filter: string): void {
@@ -174,7 +174,7 @@ export class RequisitionComponent implements OnInit {
         return moment.utc(requisition.systemDate).month() === currentMonth;
       });
       this.getMonthlyRequisitions();
-      this.pending = this.requisitions.filter((requisition) => requisition.state.state === 'Pendiente por admin').length;
+      this.pending = this.requisitions.filter((requisition) => requisition.state.state === 'Pendiente por proveeduria').length;
       this.loading = false;
     });
   }
