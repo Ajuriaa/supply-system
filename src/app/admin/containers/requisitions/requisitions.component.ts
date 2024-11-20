@@ -118,7 +118,9 @@ export class RequisitionComponent implements OnInit {
   public openEditRequisitionModal(requisition: IRequisition, type = 'edit'): void {
     this.dialog.open(EditWatchRequisitionComponent, {
       panelClass: 'dialog-style',
-      data: {requisition, type}
+      data: {requisition, type},
+      autoFocus: false,
+      maxHeight: '100vh'
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getAllRequisitions();
