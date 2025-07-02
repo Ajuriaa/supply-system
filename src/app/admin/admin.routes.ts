@@ -7,7 +7,8 @@ import {
   SuppliersComponent,
   RequisitionComponent,
   ReportsComponent,
-  InputComponent
+  InputComponent,
+  LogComponent
 } from './containers';
 
 export const adminRoutes: Routes = [{
@@ -49,6 +50,11 @@ export const adminRoutes: Routes = [{
       path: 'input/:id',
       title: 'Entrada',
       component: InputComponent
+    },
+    {
+      path: 'log',
+      title: 'Historial de Facturas',
+      component: LogComponent
     }
   ]
 }];

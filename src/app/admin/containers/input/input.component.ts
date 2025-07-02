@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FileDropComponent, LoadingComponent, PrimaryButtonComponent } from 'src/app/shared';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import moment from 'moment';
@@ -80,6 +80,7 @@ export class InputComponent implements OnInit {
     private entryQuery: EntryQueries,
     private supplierQuery: SuppliersQueries,
     private route: ActivatedRoute,
+    private router: Router,
     private uploaderService: UploaderService,
     private fileNameHelper: FileNameHelper
   ) {}
@@ -193,6 +194,10 @@ export class InputComponent implements OnInit {
 
   public seeInvoice(): void {
     window.open(this.invoiceLink, "_blank");
+  }
+
+  public navigateToLogs(): void {
+    this.router.navigate(['/admin/log']);
   }
 
   public continue(): void {
