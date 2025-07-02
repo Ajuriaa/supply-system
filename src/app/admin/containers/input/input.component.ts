@@ -19,7 +19,7 @@ import moment from 'moment';
 import { environment } from 'src/environments/environments';
 import { EntryQueries, ProductQueries, SuppliersQueries, UploaderService } from '../../services';
 import { IEntryInvoice, IProduct, ISupplier } from '../../interfaces';
-import { ConfirmInputComponent, CreateUpdateProductComponent } from '../../components';
+import { ConfirmInputComponent, CreateUpdateProductComponent, EditInvoiceDialogComponent } from '../../components';
 import { FileNameHelper } from '../../helpers';
 
 const TABLE_COLUMNS = ['product', 'group', 'quantity', 'unit', 'price', 'dueDate', 'actions'];
@@ -131,6 +131,17 @@ export class InputComponent implements OnInit {
     }).afterClosed().subscribe((result) => {
       if(result) {
         this.getProductList();
+      }
+    });
+  }
+
+  public openEditInvoiceModal(): void {
+    this.dialog.open(EditInvoiceDialogComponent, {
+      panelClass: 'dialog-style'
+    }).afterClosed().subscribe((result) => {
+      if(result) {
+        // Refresh invoice list if changes were made
+        this.getInvoiceList();
       }
     });
   }

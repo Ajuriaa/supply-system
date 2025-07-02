@@ -1,0 +1,108 @@
+@import 'global';
+
+.container {
+  @include flex-center-column;
+  gap: 2rem;
+  padding: 4rem;
+  width: 75rem;
+  border-radius: 2rem;
+  color: $dark-blue;
+
+  .title {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .search-section {
+    @include flex-center-column;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 2rem;
+    border: 2px solid $light-gray;
+    border-radius: 1rem;
+  }
+
+  .edit-section {
+    @include flex-center-column;
+    gap: 2rem;
+    width: 100%;
+  }
+
+  .entry-info {
+    padding: 2rem;
+    border: 2px solid $blue;
+    border-radius: 1rem;
+    width: 100%;
+
+    p {
+      margin: 0.5rem 0;
+      font-size: 1.4rem;
+
+      strong {
+        color: $dark-blue;
+      }
+
+      a {
+        color: $blue;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .form {
+    @include flex-center-column;
+    gap: 2rem;
+    width: 100%;
+
+    .field {
+      width: 100%;
+    }
+  }
+
+  .file-section {
+    @include flex-center-column;
+    gap: 1.5rem;
+    width: 100%;
+
+    .toggle-btn {
+      width: 60%;
+    }
+
+    .file-uploader {
+      width: 100%;
+    }
+  }
+
+  .search-btn {
+    width: 40%;
+  }
+
+  .buttons {
+    @include flex-center-column;
+    width: 100%;
+    gap: 2rem;
+    flex-direction: row;
+    margin-top: 2rem;
+
+    .btn {
+      width: 50%;
+    }
+  }
+
+  .error {
+    text-align: center;
+    margin-top: 1rem;
+  }
+}

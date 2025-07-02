@@ -78,6 +78,7 @@
   </form>
   <app-file-drop class="file-uploader" (selectedFiles)="getFiles($event)" *ngIf="!showProducts"></app-file-drop>
   <app-primary-button class="btn" (btnClick)="continue()" *ngIf="!showProducts">Continuar</app-primary-button>
+  <app-primary-button class="btn" (btnClick)="openEditInvoiceModal()" *ngIf="!showProducts">Editar Factura</app-primary-button>
   <div class="btn-container">
     <app-primary-button class="btn" (btnClick)="openCreateUpdateProductModal()" *ngIf="showProducts">
       Crear Producto

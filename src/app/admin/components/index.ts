@@ -3,6 +3,7 @@ export * from './create-update-supplier/create-update-supplier.component';
 export * from './cancel-requisition/cancel-requisition.component';
 export * from './delete/delete.component';
 export * from './confirm-input/confirm-input.component';
+export * from './edit-invoice-dialog/edit-invoice-dialog.component';
 export * from './remove-products/remove-products.component';
 export * from './finish-requisition/finish-requisition.component';
 export * from './edit-watch-requisition/edit-watch-requisition.component';

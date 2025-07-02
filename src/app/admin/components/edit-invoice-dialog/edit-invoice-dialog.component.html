@@ -1,0 +1,77 @@
+<app-loading class="loading" *ngIf="loading"></app-loading>
+
+<div class="container" *ngIf="!loading">
+  <p class="title">Editar Factura</p>
+  
+  <!-- Search Form -->
+  <div class="search-section" *ngIf="!entryFound">
+    <p class="subtitle">Buscar Entrada por Número de Factura</p>
+    <form [formGroup]="searchForm" class="form">
+      <mat-form-field class="field">
+        <mat-label>Número de Factura</mat-label>
+        <input
+          type="text"
+          placeholder="Ingrese el número de factura"
+          required
+          matInput
+          formControlName="invoiceNumber"
+        />
+      </mat-form-field>
+    </form>
+    <app-primary-button class="btn search-btn" (btnClick)="searchEntry()">Buscar</app-primary-button>
+    <mat-error class="error" *ngIf="notFound">Factura no encontrada</mat-error>
+  </div>
+
+  <!-- Edit Form -->
+  <div class="edit-section" *ngIf="entryFound">
+    <p class="subtitle">Información de la Entrada</p>
+    <div class="entry-info">
+      <p><strong>Número de Factura Actual:</strong> {{ currentEntry.invoiceNumber }}</p>
+      <p><strong>Fecha:</strong> {{ currentEntry.date | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Proveedor:</strong> {{ currentEntry.supplier.name }}</p>
+      <p *ngIf="hasCurrentInvoice()"><strong>Archivo Actual:</strong> 
+        <a [href]="getCurrentInvoiceUrl()" target="_blank">{{ getInvoiceFileName() }}</a>
+      </p>
+      <p *ngIf="!hasCurrentInvoice()"><strong>Archivo:</strong> No hay archivo adjunto</p>
+    </div>
+
+    <form [formGroup]="editForm" class="form">
+      <mat-form-field class="field">
+        <mat-label>Nuevo Número de Factura</mat-label>
+        <input
+          type="text"
+          placeholder="Número de factura"
+          required
+          matInput
+          formControlName="newInvoiceNumber"
+        />
+      </mat-form-field>
+    </form>
+
+    <div class="file-section">
+      <app-primary-button 
+        styleClass="btn-outline" 
+        class="toggle-btn" 
+        (btnClick)="toggleFileUpload()">
+        {{ showFileUpload ? 'Cancelar cambio de archivo' : 'Cambiar archivo de factura' }}
+      </app-primary-button>
+      
+      <app-file-drop 
+        *ngIf="showFileUpload"
+        class="file-uploader" 
+        (selectedFiles)="getFiles($event)">
+      </app-file-drop>
+    </div>
+
+    <div class="buttons">
+      <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>
+      <app-primary-button class="btn" (btnClick)="onSubmit()">Actualizar</app-primary-button>
+    </div>
+  </div>
+
+  <div class="buttons" *ngIf="!entryFound">
+    <app-primary-button styleClass="btn-red" class="btn" (btnClick)="onCancel()">Cancelar</app-primary-button>
+  </div>
+
+  <mat-error class="error" *ngIf="error">Recuerda llenar todos los campos requeridos*</mat-error>
+</div>
